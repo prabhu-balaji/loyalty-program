@@ -10,6 +10,13 @@ module Api
         render json: customer, serializer: CustomerCreationSerializer
       end
 
+      def show
+        customer = Customer.find_by_gid(params[:id])
+        raise ObjectNotFound.new(object_name: 'Customer') if customer.blank?
+
+        render json: customer
+      end
+
       private
 
       def customer_params

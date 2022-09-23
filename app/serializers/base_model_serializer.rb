@@ -5,10 +5,10 @@ class BaseModelSerializer < ActiveModel::Serializer
   end
 
   def created_at
-    HelperMethods.standardize_datetime(object.created_at)
+    AppHelperMethods.standardize_datetime(object.created_at)
   end
 
   def updated_at
-    HelperMethods.standardize_datetime(object.updated_at)
+    AppHelperMethods.standardize_datetime(object.updated_at)
   end
 end
