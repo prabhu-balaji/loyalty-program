@@ -80,7 +80,7 @@ RSpec.describe "Customers", type: :request do
       expect(response_json['created_at']).to eql(customer.created_at.to_time.iso8601)
 
       # Making columns empty and checking response
-      customer.update_attributes(name: nil, email: nil, birthday: nil)
+      customer.update(name: nil, email: nil, birthday: nil)
       get "/api/v1/customers/#{customer.gid}", headers: api_request_headers
       expect(response).to have_http_status(200)
       response_json = response.parsed_body

@@ -5,4 +5,5 @@ module Constants
     "Customer" => 'cus_',
     "Transaction" => 'txn_'
   }.freeze
+  INVALID_TRANSACTION_REGION_TYPE = "Invalid region type. It should either be DOMESTIC or FOREIGN".freeze
 end
