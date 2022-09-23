@@ -51,4 +51,10 @@ RSpec.describe Customer, type: :model do
     duplicate_customer = Customer.new(external_id: external_id)
     expect { duplicate_customer.save }.to raise_error(ActiveRecord::RecordNotUnique)
   end
+
+  it "should destroy a customer do" do
+    customer = FactoryBot.create(:customer)
+    customer.destroy
+    expect(Customer.find_by_id(customer.id)).to be nil
+  end
 end
