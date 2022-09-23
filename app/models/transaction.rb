@@ -1,6 +1,8 @@
 class Transaction < ApplicationRecord
   include GidConcern
 
+  has_one :customer_points_entry
+
   REGION_TYPE = {
     domestic: 1,
     foreign: 2
