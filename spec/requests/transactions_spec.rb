@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "Transactions", type: :request do
   describe "POST /transactions" do
+    before(:all) do
+      @customer = FactoryBot.create(:customer)
+    end
+
     context 'error scenarios' do
       it "should return 401 for unauthorized request" do
         post '/api/v1/transactions', params: {
@@ -12,15 +16,6 @@ RSpec.describe "Transactions", type: :request do
         expect(response).to have_http_status(401)
         response_json = response.parsed_body
         expect(response_json['description']).to eql("Invalid api key")
-      end
-
-      it "should throw error for empty amount" do
-        post '/api/v1/transactions', params: {
-          transaction: {}
-        }, headers: api_request_headers
-        expect(response).to have_http_status(400)
-        response_json = response.parsed_body
-        expect(response_json['description']).to eql("param is missing or the value is empty: transaction")
       end
 
       it "should throw error for empty body" do
@@ -39,9 +34,27 @@ RSpec.describe "Transactions", type: :request do
         expect(response_json['description']).to eql("param is missing or the value is empty: amount")
       end
 
+      it "should throw error for empty customer_id" do
+        post '/api/v1/transactions', params: {
+          transaction: { external_id: "random", amount: "33.0" }
+        }, headers: api_request_headers
+        expect(response).to have_http_status(400)
+        response_json = response.parsed_body
+        expect(response_json['description']).to eql("param is missing or the value is empty: customer_id")
+      end
+
+      it "should throw error for invalid customer_id" do
+        post '/api/v1/transactions', params: {
+          transaction: { external_id: "random", amount: "33.0", customer_id: "random" }
+        }, headers: api_request_headers
+        expect(response).to have_http_status(404)
+        response_json = response.parsed_body
+        expect(response_json['description']).to eql("Customer not found")
+      end
+
       it "should throw error for invalid region" do
         post '/api/v1/transactions', params: {
-          transaction: { amount: "2", region_type: "random" }
+          transaction: { amount: "2", region_type: "random", customer_id: @customer.gid }
         }, headers: api_request_headers
         expect(response).to have_http_status(400)
         response_json = response.parsed_body
@@ -51,7 +64,7 @@ RSpec.describe "Transactions", type: :request do
       it "should throw conflict for duplicate external_id" do
         transaction = FactoryBot.create(:transaction)
         post '/api/v1/transactions', params: {
-          transaction: { amount: "2", external_id: transaction.external_id }
+          transaction: { amount: "2", external_id: transaction.external_id, customer_id: @customer.gid }
         }, headers: api_request_headers
         expect(response).to have_http_status(409)
         expect(response.parsed_body['description']).to eql('Transaction with external_id already exists')
@@ -61,7 +74,7 @@ RSpec.describe "Transactions", type: :request do
       it "should create txn with just amount" do
         amount = "244.33"
         post '/api/v1/transactions', params: {
-          transaction: { amount: amount }
+          transaction: { amount: amount, customer_id: @customer.gid }
         }, headers: api_request_headers
         expect(response).to have_http_status(201)
         response_json = response.parsed_body
@@ -71,6 +84,7 @@ RSpec.describe "Transactions", type: :request do
         expect(transaction_from_db.transaction_date.to_s).to eql(transaction_from_db.created_at.to_s)
         expect(transaction_from_db.region_type).to eql(Transaction::REGION_TYPE[:domestic])
         expect(transaction_from_db.amount.to_f).to eql(amount.to_f)
+        expect(transaction_from_db.customer).to eql(@customer)
       end
 
       it "should create domestic txn with fields" do
@@ -79,7 +93,7 @@ RSpec.describe "Transactions", type: :request do
         transaction_date = "2021-09-23T08:33:57+00:00"
         region_type = "DOMESTIC"
         post '/api/v1/transactions', params: {
-          transaction: { amount: amount, external_id: external_id, transaction_date: transaction_date, region_type: region_type }
+          transaction: { amount: amount, external_id: external_id, transaction_date: transaction_date, region_type: region_type, customer_id: @customer.gid }
         }, headers: api_request_headers
         expect(response).to have_http_status(201)
         response_json = response.parsed_body
@@ -90,6 +104,7 @@ RSpec.describe "Transactions", type: :request do
         expect(transaction_from_db.region_type).to eql(Transaction::REGION_TYPE[:domestic])
         expect(transaction_from_db.amount.to_f).to eql(amount.to_f)
         expect(transaction_from_db.external_id).to eql(external_id)
+        expect(transaction_from_db.customer).to eql(@customer)
       end
 
       it "should create foreign txn with fields" do
@@ -98,7 +113,7 @@ RSpec.describe "Transactions", type: :request do
         transaction_date = "2021-09-23T08:33:57+00:00"
         region_type = "FOREIGN"
         post '/api/v1/transactions', params: {
-          transaction: { amount: amount, external_id: external_id, transaction_date: transaction_date, region_type: region_type }
+          transaction: { amount: amount, external_id: external_id, transaction_date: transaction_date, region_type: region_type, customer_id: @customer.gid }
         }, headers: api_request_headers
         expect(response).to have_http_status(201)
         response_json = response.parsed_body
@@ -109,6 +124,7 @@ RSpec.describe "Transactions", type: :request do
         expect(transaction_from_db.region_type).to eql(Transaction::REGION_TYPE[:foreign])
         expect(transaction_from_db.amount.to_f).to eql(amount.to_f)
         expect(transaction_from_db.external_id).to eql(external_id)
+        expect(transaction_from_db.customer).to eql(@customer)
       end
     end
   end

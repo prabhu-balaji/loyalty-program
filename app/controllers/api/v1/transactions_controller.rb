@@ -35,6 +35,7 @@ module Api
       def retrieve_customer_id_from_gid(customer_gid)
         customer = Customer.find_by_gid(customer_gid)
         raise ObjectNotFound.new(object_name: 'Customer') if customer.blank?
+
         customer.id
       end
 
