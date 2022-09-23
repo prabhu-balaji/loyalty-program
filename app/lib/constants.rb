@@ -1,3 +1,3 @@
 module Constants
-  UNAUTHORIZED = "Invalid Token".freeze
+  UNAUTHORIZED = "Invalid api key".freeze
 end

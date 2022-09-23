@@ -2,6 +2,18 @@ require 'rails_helper'
 
 RSpec.describe "Customers", type: :request do
   describe "POST /customers" do
+    it "should return 401 for unauthorized request" do
+      post '/api/v1/customers', params: {
+        customer: {
+          name: "random"
+        }
+      }, headers: { 'api-key': "random" }
+      expect(response).to have_http_status(401)
+      response_json = response.parsed_body
+      expect(response_json['description']).to eql("Invalid api key")
+    end
+
+
     it "should successfully create a customer with specified parameters" do
       external_id = KSUID.new.to_s
       name = Faker::Name.name
@@ -11,7 +23,7 @@ RSpec.describe "Customers", type: :request do
         customer: {
           name: name, email: email, birthday: birthday, external_id: external_id
         }
-      }
+      }, headers: api_request_headers
       expect(response).to have_http_status(200)
       response_json = response.parsed_body
       customer_from_db = Customer.find_by_gid(response_json['id'])
@@ -29,7 +41,7 @@ RSpec.describe "Customers", type: :request do
         customer: {
           email: "random"
         }
-      }
+      }, headers: api_request_headers
       expect(response).to have_http_status(400)
       response_json = response.parsed_body
       expect(response_json['description'] == "Email is invalid")
