@@ -5,8 +5,4 @@ module AppHelperMethods
       datetime.to_time.iso8601
     end
   end
-
-  def random
-    1
-  end
 end
