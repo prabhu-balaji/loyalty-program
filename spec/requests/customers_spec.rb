@@ -48,18 +48,11 @@ RSpec.describe "Customers", type: :request do
     end
 
     it "should throw 409 for customer with duplicate external id" do
-      external_id = KSUID.new.to_s
+      customer = FactoryBot.create(:customer)
+      # Trying to create customer with duplicate external_id
       post '/api/v1/customers', params: {
         customer: {
-          external_id: external_id
-        }
-      }, headers: api_request_headers
-      expect(response).to have_http_status(200)
-
-      # creating customer with duplicate external_id
-      post '/api/v1/customers', params: {
-        customer: {
-          external_id: external_id
+          external_id: customer.external_id
         }
       }, headers: api_request_headers
       expect(response).to have_http_status(409)
