@@ -23,11 +23,12 @@ module Api
           transaction_params[:region_type] = Transaction::REGION_TYPE[transaction_params[:region_type].downcase.to_sym]
           raise ApplicationBaseException.new(message: Constants::INVALID_TRANSACTION_REGION_TYPE) if transaction_params[:region_type].blank?
         end
-        transaction_params[:amount] = params[:amount].to_f if transaction_params[:amount].present?
+        transaction_params[:amount] = transaction_params[:amount].to_f if transaction_params[:amount].present?
       end
 
       def transaction_params
-        @transaction_params ||= params[:transaction].permit(:external_id, :amount, :external_id, :transaction_date, :region_type)
+        @transaction_params ||= params[:transaction].permit(:external_id, :amount, :external_id, :transaction_date,
+                                                            :region_type)
       end
 
       def validate_required_params
