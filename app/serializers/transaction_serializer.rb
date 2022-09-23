@@ -1,5 +1,5 @@
 class TransactionSerializer < BaseModelSerializer
-  attributes :id, :external_id, :amount, :region_type, :transaction_date
+  attributes :id, :customer_id, :amount, :external_id, :region_type, :transaction_date
 
   def amount
     object.amount.to_s
@@ -11,5 +11,9 @@ class TransactionSerializer < BaseModelSerializer
 
   def transaction_date
     AppHelperMethods.standardize_datetime(object.transaction_date)
+  end
+
+  def customer_id
+    object.customer.gid
   end
 end
