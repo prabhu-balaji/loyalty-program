@@ -1,6 +1,6 @@
-class Unauthorized < ApplicationExceptionBase
+class Unauthorized < ApplicationBaseException
   def initialize(message: '')
-    @code = 401
+    @status_code = 401
     @message = message.blank? ? Constants::UNAUTHORIZED : message
   end
 end

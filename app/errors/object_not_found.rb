@@ -1,4 +1,4 @@
-class ObjectNotFound < ApplicationExceptionBase
+class ObjectNotFound < ApplicationBaseException
   attr_accessor :object_name
 
   def initialize(object_name: '')
