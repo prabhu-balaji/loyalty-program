@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_22_092157) do
+ActiveRecord::Schema.define(version: 2022_09_23_115618) do
   create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
                             force: :cascade do |t|
     t.string "gid", limit: 40, null: false
@@ -22,5 +22,18 @@ ActiveRecord::Schema.define(version: 2022_09_22_092157) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["external_id"], name: "index_customers_on_external_id", unique: true
     t.index ["gid"], name: "index_customers_on_gid"
+  end
+
+  create_table "transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+                               force: :cascade do |t|
+    t.string "gid", limit: 40, null: false
+    t.string "external_id"
+    t.integer "region_type", limit: 1
+    t.decimal "amount", precision: 20, scale: 5, null: false
+    t.datetime "transaction_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["external_id"], name: "index_transactions_on_external_id", unique: true
+    t.index ["gid"], name: "index_transactions_on_gid"
   end
 end
