@@ -78,6 +78,7 @@ RSpec.describe "Customers", type: :request do
       expect(response_json['email']).to eql(customer.email)
       expect(response_json['external_id']).to eql(customer.external_id)
       expect(response_json['created_at']).to eql(customer.created_at.to_time.iso8601)
+      expect(response_json['points']).to eql(0)
 
       # Making columns empty and checking response
       customer.update(name: nil, email: nil, birthday: nil)
@@ -89,6 +90,33 @@ RSpec.describe "Customers", type: :request do
       expect(response_json['email']).to be nil
       expect(response_json['external_id']).to eql(customer.external_id)
       expect(response_json['created_at']).to eql(customer.created_at.to_time.iso8601)
+      expect(response_json['points']).to eql(0)
+    end
+  end
+
+  describe 'creating customer, transaction and verifying points evaluation' do
+    it "should return evaluated points in get customer api" do
+      customer_gid = create_customer_via_api
+      transaction_gid = create_transaction_via_api(customer_gid: customer_gid, amount: 100)
+      get "/api/v1/customers/#{customer_gid}", headers: api_request_headers
+      expect(response).to have_http_status(200)
+      expect(response.parsed_body['points']).to eql(10)
+    end
+
+    it "should return evaluated points in get customer api for amount not divisible by 100" do
+      customer_gid = create_customer_via_api
+      transaction_gid = create_transaction_via_api(customer_gid: customer_gid, amount: 490)
+      get "/api/v1/customers/#{customer_gid}", headers: api_request_headers
+      expect(response).to have_http_status(200)
+      expect(response.parsed_body['points']).to eql(40)
+    end
+
+    it "should return evaluated points in get customer api for foreign txns" do
+      customer_gid = create_customer_via_api
+      transaction_gid = create_transaction_via_api(customer_gid: customer_gid, amount: 100, region_type: "FOREIGN")
+      get "/api/v1/customers/#{customer_gid}", headers: api_request_headers
+      expect(response).to have_http_status(200)
+      expect(response.parsed_body['points']).to eql(20)
     end
   end
 end
