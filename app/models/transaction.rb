@@ -1,15 +1,15 @@
 class Transaction < ApplicationRecord
   include GidConcern
 
-  validates_presence_of :amount
-
-  before_validation :prefill_region
-  before_create :prefill_transaction_date
-
   REGION_TYPE = {
     domestic: 1,
     foreign: 2
   }.freeze
+
+  validates_presence_of :amount
+
+  before_validation :prefill_region
+  before_create :prefill_transaction_date
 
   private
 

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :customers, only: [:create, :show]
+      resources :transactions, only: [:create, :show]
     end
   end
 end
