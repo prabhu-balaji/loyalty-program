@@ -128,4 +128,35 @@ RSpec.describe "Transactions", type: :request do
       end
     end
   end
+
+  describe "GET /transactions/:id" do
+    before(:all) do
+      @customer = FactoryBot.create(:customer)
+    end
+
+    context 'error scenarios' do
+      it "should return 404 for invalid transaction id" do
+        get '/api/v1/transactions/random', headers: api_request_headers
+        expect(response).to have_http_status(404)
+        response_json = response.parsed_body
+        expect(response_json['description']).to eql("Transaction not found")
+      end
+    end
+
+    context 'success scenarios' do
+      it "should return success for transaction" do
+        external_id = KSUID.new.to_s
+        amount = 200.38
+        transaction_date = "2020-09-23T08:33:57+08:00"
+        transaction = Transaction.create(external_id: external_id, amount: amount, transaction_date: transaction_date,
+                                         region_type: Transaction::REGION_TYPE[:domestic], customer_id: @customer.id)
+        get "/api/v1/transactions/#{transaction.gid}", headers: api_request_headers
+        expect(response).to have_http_status(200)
+        response_json = response.parsed_body
+        expect(response_json['amount']).to eql(amount.to_f.to_s)
+        expect(response_json['external_id']).to eql(external_id)
+        expect(response_json['customer_id']).to eql(@customer.gid)
+      end
+    end
+  end
 end
