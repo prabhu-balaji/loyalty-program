@@ -13,7 +13,6 @@ RSpec.describe "Customers", type: :request do
       expect(response_json['description']).to eql("Invalid api key")
     end
 
-
     it "should successfully create a customer with specified parameters" do
       external_id = KSUID.new.to_s
       name = Faker::Name.name
