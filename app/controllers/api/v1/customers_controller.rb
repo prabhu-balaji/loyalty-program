@@ -7,7 +7,7 @@ module Api
         status = customer.save
         raise ApplicationBaseException.new(message: customer.errors.full_messages.first) unless status
 
-        render json: customer, serializer: CustomerCreationSerializer
+        render json: customer, serializer: CustomerCreationSerializer, status: :created
       end
 
       def show

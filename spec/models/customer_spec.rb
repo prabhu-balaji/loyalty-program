@@ -8,7 +8,7 @@ RSpec.describe Customer, type: :model do
     birthday = Faker::Date.birthday.to_s
     customer = Customer.create(name: name, email: email, birthday: birthday, external_id: external_id)
     expect(customer.id.present?).to be true
-    expect(customer.gid.to_s.starts_with?("cus_")).to be true
+    expect(customer.gid.starts_with?("cus_")).to be true
     expect(customer.name).to eql(name)
     expect(customer.external_id).to eql(external_id)
     expect(customer.email).to eql(email)
@@ -21,7 +21,7 @@ RSpec.describe Customer, type: :model do
     external_id = KSUID.new.to_s
     customer = Customer.create(external_id: external_id)
     expect(customer.id.present?).to be true
-    expect(customer.gid.to_s.starts_with?("cus_")).to be true
+    expect(customer.gid.starts_with?("cus_")).to be true
     expect(customer.external_id).to eql(external_id)
 
     customer.name = "Random"
