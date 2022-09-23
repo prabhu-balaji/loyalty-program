@@ -46,5 +46,24 @@ RSpec.describe "Customers", type: :request do
       response_json = response.parsed_body
       expect(response_json['description'] == "Email is invalid")
     end
+
+    it "should throw 409 for customer with duplicate external id" do
+      external_id = KSUID.new.to_s
+      post '/api/v1/customers', params: {
+        customer: {
+          external_id: external_id
+        }
+      }, headers: api_request_headers
+      expect(response).to have_http_status(200)
+
+      # creating customer with duplicate external_id
+      post '/api/v1/customers', params: {
+        customer: {
+          external_id: external_id
+        }
+      }, headers: api_request_headers
+      expect(response).to have_http_status(409)
+      expect(response.parsed_body['description']).to eql('Customer with external_id already exists')
+    end
   end
 end
