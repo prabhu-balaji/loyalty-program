@@ -115,6 +115,12 @@ RSpec.describe Transaction, type: :model do
       expect(transaction.customer_points_entry.customer_id).to eql(@customer.id)
       expect(transaction.customer_points_entry.points).to eql(140)
       expect(@customer.points).to eql(initial_customer_points + 140)
+      latest_customer_points = @customer.points
+
+      # should not add points when txn is updated. not a valid usecase as of now, but better to verify.
+      transaction.external_id = KSUID.new.to_s
+      transaction.save
+      expect(@customer.reload.points).to eql(latest_customer_points)
     end
   end
 end
