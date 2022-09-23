@@ -16,6 +16,13 @@ module Api
         render json: transaction, serializer: TransactionCreationSerializer, status: :created
       end
 
+      def show
+        transaction = Transaction.find_by_gid(params[:id])
+        raise ObjectNotFound.new(object_name: 'Transaction') if transaction.blank?
+
+        render json: transaction
+      end
+
       private
 
       def prepare_params
