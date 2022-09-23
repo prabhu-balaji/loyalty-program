@@ -9,5 +9,6 @@ FactoryBot.define do
   factory :transaction do
     amount { Faker::Number.decimal }
     external_id { KSUID.new.to_s }
+    customer_id { FactoryBot.create(:customer).id }
   end
 end

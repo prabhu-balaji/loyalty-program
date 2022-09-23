@@ -6,6 +6,8 @@ class Transaction < ApplicationRecord
     foreign: 2
   }.freeze
 
+  belongs_to :customer
+
   validates_presence_of :amount
 
   before_validation :prefill_region
