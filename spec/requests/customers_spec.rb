@@ -23,7 +23,7 @@ RSpec.describe "Customers", type: :request do
           name: name, email: email, birthday: birthday, external_id: external_id
         }
       }, headers: api_request_headers
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(201)
       response_json = response.parsed_body
       customer_from_db = Customer.find_by_gid(response_json['id'])
       expect(customer_from_db.present?).to be true
