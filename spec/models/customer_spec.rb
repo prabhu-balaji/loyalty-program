@@ -15,6 +15,12 @@ RSpec.describe Customer, type: :model do
     expect(customer.birthday.to_s).to eql(birthday)
     expect(customer.created_at.present?).to be true
     expect(customer.updated_at.present?).to be true
+    expect(customer.points).to eql(0)
+
+    # update
+    customer.points = 20
+    customer.save
+    expect(customer.reload.points).to eql(20)
   end
 
   it "should create a customer with just external_id and then perform update on a different field" do
