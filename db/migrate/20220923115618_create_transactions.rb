@@ -6,7 +6,7 @@ class CreateTransactions < ActiveRecord::Migration[6.0]
       t.integer :region_type, limit: 1
       t.decimal :amount, precision: 20, scale: 5, null: false
       t.datetime :transaction_date
-
+      t.integer :customer_id, :limit => 8, null: false
       t.timestamps
     end
     add_index :transactions, :gid
