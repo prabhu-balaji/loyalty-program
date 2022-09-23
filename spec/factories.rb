@@ -5,4 +5,9 @@ FactoryBot.define do
     birthday { Faker::Date.birthday.to_s }
     external_id { KSUID.new.to_s }
   end
+
+  factory :transaction do
+    amount { Faker::Number.decimal }
+    external_id { KSUID.new.to_s }
+  end
 end
