@@ -34,7 +34,7 @@ module HelperMethods
   end
 
   def coffee_reward
-    @coffee_reward = Reward.find_by_name('coffee')
+    @coffee_reward = Reward.find_by_name(Constants::REWARDS_MAPPING[:coffee])
   end
 
   def movie_reward_program
@@ -44,7 +44,7 @@ module HelperMethods
   end
 
   def movie_reward
-    @movie_reward ||= Reward.find_by_name('movie_ticket')
+    @movie_reward ||= Reward.find_by_name(Constants::REWARDS_MAPPING[:movie_ticket])
   end
 
   def cash_rebate_program
@@ -54,6 +54,6 @@ module HelperMethods
   end
 
   def cash_rebate_reward
-    cash_rebate_reward ||= Reward.find_by_name('five_percent_cash_rebate')
+    @cash_rebate_reward ||= Reward.find_by_name(Constants::REWARDS_MAPPING[:cash_rebate])
   end
 end

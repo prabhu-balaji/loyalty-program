@@ -27,7 +27,7 @@ class MovieTicketRewarderJob
   end
 
   def movie_reward
-    @coffee_reward = Reward.find_by_name('movie_ticket')
+    @coffee_reward = Reward.find_by_name(Constants::REWARDS_MAPPING[:movie_ticket])
   end
 
   def first_txn_beyond_last_60_days?(customer)

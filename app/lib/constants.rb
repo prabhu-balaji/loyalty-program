@@ -29,6 +29,12 @@ module Constants
     }
   ].freeze # TODO: Move to db. keeping this hardcoded for now. Ideally clients should be able to create reward programs & configure rules by themselves.
 
+  REWARDS_MAPPING = {
+    coffee: "Coffee",
+    movie_ticket: "Movie Ticket",
+    cash_rebate: "5% cash rebate"
+  }.freeze
+
   REWARD_EXPIRED_ERROR = "Reward has expired."
   INSUFFICIENT_QUANTITY = "Insufficient quantity"
   INVALID_QUANTITY = "Invalid quantity"

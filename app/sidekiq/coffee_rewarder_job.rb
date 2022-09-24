@@ -43,7 +43,7 @@ class CoffeeRewarderJob
   end
 
   def coffee_reward
-    @coffee_reward = Reward.find_by_name('coffee')
+    @coffee_reward = Reward.find_by_name(Constants::REWARDS_MAPPING[:coffee])
   end
 
   def coffee_reward_program
