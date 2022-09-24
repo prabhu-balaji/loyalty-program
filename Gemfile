@@ -44,3 +44,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'ksuid', '~> 0.5.0'
 gem 'active_model_serializers', '0.10.13'
+gem 'sidekiq', '~> 6.5.7'
