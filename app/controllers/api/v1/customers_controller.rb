@@ -15,8 +15,7 @@ module Api
       end
 
       def show
-        customer = Customer.find_by_gid(params[:id])
-        raise ObjectNotFound.new(object_name: 'Customer') if customer.blank?
+        customer = Customer.find_by_gid!(params[:id])
 
         render json: customer
       end

@@ -17,8 +17,7 @@ module Api
       end
 
       def show
-        transaction = Transaction.find_by_gid(params[:id])
-        raise ObjectNotFound.new(object_name: 'Transaction') if transaction.blank?
+        transaction = Transaction.find_by_gid!(params[:id])
 
         render json: transaction
       end
@@ -31,19 +30,12 @@ module Api
           raise ApplicationBaseException.new(message: Constants::INVALID_TRANSACTION_REGION_TYPE) if transaction_params[:region_type].blank?
         end
         transaction_params[:amount] = transaction_params[:amount].to_f if transaction_params[:amount].present?
-        transaction_params[:customer_id] = retrieve_customer_id_from_gid(transaction_params[:customer_id])
+        transaction_params[:customer_id] = Customer.find_by_gid!(transaction_params[:customer_id]).id
       end
 
       def transaction_params
         @transaction_params ||= params[:transaction].permit(:external_id, :amount, :external_id, :transaction_date,
                                                             :region_type, :customer_id)
-      end
-
-      def retrieve_customer_id_from_gid(customer_gid)
-        customer = Customer.find_by_gid(customer_gid)
-        raise ObjectNotFound.new(object_name: 'Customer') if customer.blank?
-
-        customer.id
       end
 
       def validate_required_params
