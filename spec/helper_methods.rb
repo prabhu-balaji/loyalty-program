@@ -1,6 +1,6 @@
 module HelperMethods
   def api_request_headers
-    { 'api-key': Rails.application.credentials.api_key }
+    { 'api-key' => Rails.application.credentials.api_key, 'content_type' => 'application/json' }
   end
 
   def create_customer_via_api

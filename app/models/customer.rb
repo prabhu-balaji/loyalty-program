@@ -7,12 +7,13 @@ class Customer < ApplicationRecord
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
 
-  def grant_reward(reward_id:, quantity:, reward_program_id: nil)
+  def grant_reward(reward_id:, quantity:, reward_program_id: nil, expires_at: nil)
     self.customer_rewards.create(
       reward_id: reward_id,
       reward_program_id: reward_program_id,
       quantity: quantity,
-      status: CustomerReward::STATUS_MAPPING[:active]
+      status: CustomerReward::STATUS_MAPPING[:active],
+      expires_at: expires_at
     )
   end
 

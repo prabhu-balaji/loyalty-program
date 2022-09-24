@@ -12,6 +12,6 @@ class CustomerReward < ApplicationRecord
   }.freeze
 
   def expired?
-    @expired ||= self.expires_at.present? && self.expires_at > DateTime.current.utc
+    @expired ||= self.expires_at.present? && self.expires_at < DateTime.current.utc
   end
 end
