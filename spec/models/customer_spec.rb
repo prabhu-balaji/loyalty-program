@@ -16,6 +16,7 @@ RSpec.describe Customer, type: :model do
     expect(customer.created_at.present?).to be true
     expect(customer.updated_at.present?).to be true
     expect(customer.points).to eql(0)
+    expect(customer.tier_id).to eql(Constants::CUSTOMER_TIERS[:standard])
 
     # update
     customer.points = 20

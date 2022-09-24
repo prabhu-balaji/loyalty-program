@@ -7,6 +7,8 @@ class Customer < ApplicationRecord
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
 
+  before_validation :set_tier_id
+
   def grant_reward(reward_id:, quantity:, reward_program_id: nil, expires_at: nil)
     self.customer_rewards.create(
       reward_id: reward_id,
@@ -22,5 +24,11 @@ class Customer < ApplicationRecord
       self.customer_points_entries.create!(customer_id: self.id, points: points, transaction_id: transaction_id)
       Customer.update_counters(self.id, points: points)
     end
+  end
+
+  private
+
+  def set_tier_id
+    self.tier_id = Constants::CUSTOMER_TIERS[:standard] if self.tier_id.blank?
   end
 end

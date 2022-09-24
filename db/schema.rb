@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_24_124641) do
+ActiveRecord::Schema.define(version: 2022_09_24_193233) do
   create_table "customer_points_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
                                           force: :cascade do |t|
     t.bigint "customer_id", null: false
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2022_09_24_124641) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "points", precision: 20, default: "0"
+    t.integer "tier_id", limit: 1
     t.index ["external_id"], name: "index_customers_on_external_id", unique: true
     t.index ["gid"], name: "index_customers_on_gid"
   end

@@ -7,7 +7,7 @@ RSpec.describe BirthdayMonthRewardJob, type: :job do
   after(:all) do
     Customer.delete_all
   end
-  
+
   def customer_coffee_rewards(customer)
     customer.customer_rewards.where(reward_id: coffee_reward.id, reward_program_id: birthday_reward_program[:id])
   end
