@@ -19,7 +19,7 @@ class PointsExpiryJob
     ActiveRecord::Base.transaction do
       customer.with_lock("LOCK IN SHARE MODE") do # Locking this prevents points being added/subtracted from else where while being updated here.
         current_year_points = customer.customer_points_entries.where("created_at >= ?",
-                                                                     Time.now.beginning_of_year).sum(:points)
+                                                                     DateTime.current.utc.beginning_of_year).sum(:points)
         customer.points = current_year_points
         customer.save!
       end

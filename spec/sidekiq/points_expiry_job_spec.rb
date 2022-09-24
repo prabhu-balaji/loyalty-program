@@ -14,7 +14,7 @@ RSpec.describe PointsExpiryJob, type: :job do
     # Updating customer_2 points entry to last year
     expect(customer_2.customer_points_entries.to_a.size).to eql(1)
     customer_2_points_entry = customer_2.customer_points_entries.first
-    expect(customer_2_points_entry.update(created_at: DateTime.current - 1.year)).to be true
+    expect(customer_2_points_entry.update(created_at: DateTime.current.utc - 1.year)).to be true
 
     PointsExpiryJob.new.perform
     expect(customer_1.reload.points).to eql(200)

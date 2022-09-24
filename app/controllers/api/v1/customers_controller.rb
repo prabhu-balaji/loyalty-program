@@ -1,6 +1,8 @@
 module Api
   module V1
     class CustomersController < ApplicationController
+      before_action :validate_reward_claim_params, only: [:claim_reward]
+
       rescue_from ActiveRecord::RecordNotUnique do
         handle_uniqueness_error(model_name: 'Customer', field_name: 'external_id')
       end
@@ -13,16 +15,33 @@ module Api
       end
 
       def show
-        customer = Customer.find_by_gid(params[:id])
-        raise ObjectNotFound.new(object_name: 'Customer') if customer.blank?
+        customer = Customer.find_by_gid!(params[:id])
 
         render json: customer
+      end
+
+      def claim_reward
+        RewardClaimer.call(
+          customer_id: reward_claim_params[:id],
+          customer_reward_id: reward_claim_params[:customer_reward_id],
+          quantity: reward_claim_params[:quantity]
+        )
+        render json: { success: true }
       end
 
       private
 
       def customer_params
         params.require(:customer).permit(:name, :email, :external_id, :birthday)
+      end
+
+      def validate_reward_claim_params
+        reward_claim_params.require([:quantity, :customer_reward_id, :id])
+        raise ApplicationBaseException.new(message: Constants::INVALID_QUANTITY) unless reward_claim_params[:quantity] > 0
+      end
+
+      def reward_claim_params
+        @reward_claim_params ||= params.permit(:customer_reward_id, :quantity, :id)
       end
     end
   end
