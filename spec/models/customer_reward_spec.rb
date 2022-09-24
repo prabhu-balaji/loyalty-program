@@ -11,6 +11,7 @@ RSpec.describe CustomerReward, type: :model do
 
     customer_reward = CustomerReward.create(customer_id: customer.id, reward_id: reward.id, status: 1, quantity: 4)
     expect(customer_reward.id.present?).to be true
+    expect(customer_reward.gid.starts_with?('cus_rew_')).to be true
     customer_reward.destroy
     expect(CustomerReward.find_by_id(customer_reward.id)).to be nil
   end
