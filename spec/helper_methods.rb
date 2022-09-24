@@ -56,4 +56,10 @@ module HelperMethods
   def cash_rebate_reward
     @cash_rebate_reward ||= Reward.find_by_name(Constants::REWARDS_MAPPING[:cash_rebate])
   end
+
+  def birthday_reward_program
+    @birthday_reward_program ||= Constants::REWARD_PROGRAMS.find { |reward_program|
+      reward_program[:name].eql?('birthday_reward_program')
+    }
+  end
 end

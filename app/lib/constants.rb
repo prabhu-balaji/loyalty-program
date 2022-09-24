@@ -26,6 +26,11 @@ module Constants
       id: 3,
       name: 'cash_rebate_program',
       description: 'A 5% Cash Rebate reward is given to all users who have 10 or more transactions that have an amount > $100'
+    },
+    {
+      id: 4,
+      name: 'birthday_reward_program',
+      description: 'A Free Coffee reward is given to all users during their birthday month'
     }
   ].freeze # TODO: Move to db. keeping this hardcoded for now. Ideally clients should be able to create reward programs & configure rules by themselves.
 

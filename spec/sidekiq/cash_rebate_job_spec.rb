@@ -47,7 +47,6 @@ RSpec.describe CashRebateJob, type: :job do
   end
 
   it "should test various success scenarios" do
-    assert YAML.load_file("config/schedule.yml")["cash_rebate_awarder"]["cron"] == "0 3 1 * *"
     customer = FactoryBot.create(:customer)
 
     # Creating 11 txns in previous month with 200$

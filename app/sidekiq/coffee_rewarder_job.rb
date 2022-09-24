@@ -5,7 +5,7 @@ class CoffeeRewarderJob
     logger.info("Running CoffeeRewarderJob :: #{DateTime.current.to_s}")
     Customer.find_each(batch_size: 200).each do |customer|
       begin
-        reward_coffee_for_customer(customer) if eligible_for_coffee_reward?(customer)
+        reward_coffee(customer) if eligible_for_coffee_reward?(customer)
       rescue StandardError => exception
         logger.error("CoffeeRewarderJob::Error for customer #{customer.id} :: #{exception.message}")
       end
@@ -33,7 +33,7 @@ class CoffeeRewarderJob
     (DateTime.current.utc - 1.month).end_of_month
   end
 
-  def reward_coffee_for_customer(customer)
+  def reward_coffee(customer)
     # can be a model method
     customer_reward = customer.grant_reward(reward_id: coffee_reward.id, quantity: 1,
                                             reward_program_id: coffee_reward_program[:id])
