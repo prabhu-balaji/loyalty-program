@@ -14,10 +14,15 @@ module Constants
   REWARD_PROGRAMS = [
     {
       id: 1,
-      name: 'coffee_reward_per_calendar_month',
+      name: 'coffee_reward_program',
       description: 'If the end user accumulates 100 points in one calendar month they are given a Free Coffee reward'
+    },
+    {
+      id: 2,
+      name: 'movie_reward_program',
+      description: 'A Free Movie Tickets reward is given to new users when their spending is > $1000 within 60 days of their first transaction'
     }
-  ].freeze # TODO: Move to db. keeping this hardcoded for now. Ideally clients should be able to create reward programs by themselves.
+  ].freeze # TODO: Move to db. keeping this hardcoded for now. Ideally clients should be able to create reward programs & configure rules by themselves.
 
   REWARD_EXPIRED_ERROR = "Reward has expired."
   INSUFFICIENT_QUANTITY = "Insufficient quantity"
