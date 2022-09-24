@@ -77,10 +77,10 @@ RSpec.describe Customer, type: :model do
       expect(customer.tier_id).to eql(Constants::CUSTOMER_TIERS[:gold])
       expect(customer.customer_rewards.to_a.size).to eql(1)
       customer_reward = customer.customer_rewards.first
-      expect(customer_reward.reward_id) == lounge_access_reward.id
-      expect(customer_reward.quantity) == 4
-      expect(customer_reward.reward_program_id) == lounge_access_reward_program[:id]
-      expect(customer_reward.status) == CustomerReward::STATUS_MAPPING[:active]
+      expect(customer_reward.reward_id).to eql(lounge_access_reward.id)
+      expect(customer_reward.quantity).to eql(4)
+      expect(customer_reward.reward_program_id).to eql(lounge_access_reward_program[:id])
+      expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
 
       # upgrading from gold to platinum should not grant reward
       customer.tier_id = Constants::CUSTOMER_TIERS[:platinum]
@@ -89,10 +89,10 @@ RSpec.describe Customer, type: :model do
       expect(customer.tier_id).to eql(Constants::CUSTOMER_TIERS[:platinum])
       expect(customer.customer_rewards.to_a.size).to eql(1)
       customer_reward = customer.customer_rewards.first
-      expect(customer_reward.reward_id) == lounge_access_reward.id
-      expect(customer_reward.quantity) == 4
-      expect(customer_reward.reward_program_id) == lounge_access_reward_program[:id]
-      expect(customer_reward.status) == CustomerReward::STATUS_MAPPING[:active]
+      expect(customer_reward.reward_id).to eql(lounge_access_reward.id)
+      expect(customer_reward.quantity).to eql(4)
+      expect(customer_reward.reward_program_id).to eql(lounge_access_reward_program[:id])
+      expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
     end
 
     it "should grant lounge access reward when upgrading from standard customer to platinum" do
@@ -106,10 +106,10 @@ RSpec.describe Customer, type: :model do
       expect(customer.tier_id).to eql(Constants::CUSTOMER_TIERS[:platinum])
       expect(customer.customer_rewards.to_a.size).to eql(1)
       customer_reward = customer.customer_rewards.first
-      expect(customer_reward.reward_id) == lounge_access_reward.id
-      expect(customer_reward.quantity) == 4
-      expect(customer_reward.reward_program_id) == lounge_access_reward_program[:id]
-      expect(customer_reward.status) == CustomerReward::STATUS_MAPPING[:active]
+      expect(customer_reward.reward_id).to eql(lounge_access_reward.id)
+      expect(customer_reward.quantity).to eql(4)
+      expect(customer_reward.reward_program_id).to eql(lounge_access_reward_program[:id])
+      expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
     end
   end
 end
