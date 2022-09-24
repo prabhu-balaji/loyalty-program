@@ -1,4 +1,6 @@
 class CustomerReward < ApplicationRecord
+  include GidConcern
+
   belongs_to :customer
   belongs_to :reward
 
