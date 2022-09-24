@@ -62,4 +62,14 @@ module HelperMethods
       reward_program[:name].eql?('birthday_reward_program')
     }
   end
+
+  def lounge_access_reward
+    @lounge_access_reward ||= Reward.find_by_name(Constants::REWARDS_MAPPING[:lounge_access])
+  end
+
+  def lounge_access_reward_program
+    @lounge_access_reward_program ||= Constants::REWARD_PROGRAMS.find { |reward_program|
+      reward_program[:name].eql?('lounge_access_reward_program')
+    }
+  end
 end

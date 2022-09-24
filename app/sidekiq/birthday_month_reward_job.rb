@@ -19,8 +19,9 @@ class BirthdayMonthRewardJob
   end
 
   def reward_coffee(customer)
+    expires_at = DateTime.current.utc.end_of_month # Birthday reward typically expires end of birthday month.
     customer_reward = customer.grant_reward(reward_id: coffee_reward.id, quantity: 1,
-                                            reward_program_id: birthday_reward_program[:id])
+                                            reward_program_id: birthday_reward_program[:id], expires_at: expires_at)
     logger.error("BirthdayMonthRewardJob::Error for customer #{customer.id}") if customer_reward.id.blank?
   end
 

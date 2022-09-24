@@ -58,4 +58,58 @@ RSpec.describe Customer, type: :model do
     customer.destroy
     expect(Customer.find_by_id(customer.id)).to be nil
   end
+
+  describe 'should test lounge access reward' do
+    it "should not grant lounge access reward to standard customer" do
+      customer = Customer.create(name: Faker::Name.name)
+      expect(customer.tier_id).to eql(Constants::CUSTOMER_TIERS[:standard])
+      expect(customer.customer_rewards.to_a.size).to eql(0)
+    end
+
+    it "should grant lounge access reward when upgrading from standard customer to gold" do
+      customer = Customer.create(name: Faker::Name.name)
+      expect(customer.tier_id).to eql(Constants::CUSTOMER_TIERS[:standard])
+      expect(customer.customer_rewards.to_a.size).to eql(0)
+
+      customer.tier_id = Constants::CUSTOMER_TIERS[:gold]
+      customer.save
+      customer.reload
+      expect(customer.tier_id).to eql(Constants::CUSTOMER_TIERS[:gold])
+      expect(customer.customer_rewards.to_a.size).to eql(1)
+      customer_reward = customer.customer_rewards.first
+      expect(customer_reward.reward_id).to eql(lounge_access_reward.id)
+      expect(customer_reward.quantity).to eql(4)
+      expect(customer_reward.reward_program_id).to eql(lounge_access_reward_program[:id])
+      expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+
+      # upgrading from gold to platinum should not grant reward
+      customer.tier_id = Constants::CUSTOMER_TIERS[:platinum]
+      customer.save
+      customer.reload
+      expect(customer.tier_id).to eql(Constants::CUSTOMER_TIERS[:platinum])
+      expect(customer.customer_rewards.to_a.size).to eql(1)
+      customer_reward = customer.customer_rewards.first
+      expect(customer_reward.reward_id).to eql(lounge_access_reward.id)
+      expect(customer_reward.quantity).to eql(4)
+      expect(customer_reward.reward_program_id).to eql(lounge_access_reward_program[:id])
+      expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    end
+
+    it "should grant lounge access reward when upgrading from standard customer to platinum" do
+      customer = Customer.create(name: Faker::Name.name)
+      expect(customer.tier_id).to eql(Constants::CUSTOMER_TIERS[:standard])
+      expect(customer.customer_rewards.to_a.size).to eql(0)
+
+      customer.tier_id = Constants::CUSTOMER_TIERS[:platinum]
+      customer.save
+      customer.reload
+      expect(customer.tier_id).to eql(Constants::CUSTOMER_TIERS[:platinum])
+      expect(customer.customer_rewards.to_a.size).to eql(1)
+      customer_reward = customer.customer_rewards.first
+      expect(customer_reward.reward_id).to eql(lounge_access_reward.id)
+      expect(customer_reward.quantity).to eql(4)
+      expect(customer_reward.reward_program_id).to eql(lounge_access_reward_program[:id])
+      expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    end
+  end
 end
