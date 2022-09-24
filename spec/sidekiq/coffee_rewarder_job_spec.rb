@@ -1,15 +1,5 @@
 require 'rails_helper'
 RSpec.describe CoffeeRewarderJob, type: :job do
-  def coffee_reward_program
-    @coffee_reward_program ||= Constants::REWARD_PROGRAMS.find { |reward_program|
-      reward_program[:name].eql?('coffee_reward_per_calendar_month')
-    }
-  end
-
-  def coffee_reward
-    @coffee_reward = Reward.find_by_name('coffee')
-  end
-
   def customer_coffee_rewards(customer)
     customer.customer_rewards.where(reward_id: coffee_reward.id, reward_program_id: coffee_reward_program[:id])
   end
