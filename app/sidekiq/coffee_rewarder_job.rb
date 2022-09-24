@@ -48,7 +48,7 @@ class CoffeeRewarderJob
 
   def coffee_reward_program
     @coffee_reward_program ||= Constants::REWARD_PROGRAMS.find { |reward_program|
-      reward_program[:name].eql?('coffee_reward_per_calendar_month')
+      reward_program[:name].eql?('coffee_reward_program')
     }
   end
 

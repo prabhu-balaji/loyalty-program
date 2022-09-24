@@ -29,11 +29,21 @@ module HelperMethods
 
   def coffee_reward_program
     @coffee_reward_program ||= Constants::REWARD_PROGRAMS.find { |reward_program|
-      reward_program[:name].eql?('coffee_reward_per_calendar_month')
+      reward_program[:name].eql?('coffee_reward_program')
     }
   end
 
   def coffee_reward
     @coffee_reward = Reward.find_by_name('coffee')
+  end
+
+  def movie_reward_program
+    @movie_reward_program ||= Constants::REWARD_PROGRAMS.find { |reward_program|
+      reward_program[:name].eql?('movie_reward_program')
+    }
+  end
+
+  def movie_reward
+    @movie_reward ||= Reward.find_by_name('movie_ticket')
   end
 end
