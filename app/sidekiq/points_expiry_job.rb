@@ -2,6 +2,7 @@ class PointsExpiryJob
   include Sidekiq::Job
 
   def perform(*args)
+    # Can set a redis key to disable redeeming points every year until this job finishes running. Since we dont have redeem points logic as of now, its okay.
     logger.info("Running PointsExpiryJob :: #{DateTime.current.to_s}")
     Customer.find_each(batch_size: 200).each do |customer|
       begin
