@@ -37,10 +37,7 @@ class Transaction < ApplicationRecord
 
   def add_points_for_transaction(points)
     begin
-      ActiveRecord::Base.transaction do
-        self.create_customer_points_entry!(customer_id: self.customer_id, points: points)
-        Customer.update_counters(self.customer_id, points: points)
-      end
+      self.customer.grant_points(points: points, transaction_id: self.id,)
     rescue StandardError => exception
       logger.error "Failed while adding points for transaction :: transaction_id: #{self.id} :: #{exception.message}"
     end
