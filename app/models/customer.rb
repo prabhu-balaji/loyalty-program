@@ -8,6 +8,7 @@ class Customer < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
 
   before_validation :set_tier_id
+  after_commit :grant_lounge_access_reward, if: :grant_lounge_access_reward?
 
   def grant_reward(reward_id:, quantity:, reward_program_id: nil, expires_at: nil)
     self.customer_rewards.create(
@@ -30,5 +31,18 @@ class Customer < ApplicationRecord
 
   def set_tier_id
     self.tier_id = Constants::CUSTOMER_TIERS[:standard] if self.tier_id.blank?
+  end
+
+  def grant_lounge_access_reward
+    lounge_access_reward = Reward.find_by_name(Constants::REWARDS_MAPPING[:lounge_access])
+    reward_program = Constants::REWARD_PROGRAMS.find { |reward_program|
+      reward_program[:name].eql?('lounge_access_reward_program')
+    }
+    self.grant_reward(reward_id: lounge_access_reward.id, quantity: 4, reward_program_id: reward_program[:id]) # Not putting expiry for now.
+  end
+
+  def grant_lounge_access_reward?
+    self.previous_changes.key?(:tier_id) && self.tier_id.in?(Constants::ELIGIBLE_TIERS_FOR_LOUNGE) &&
+      !self.previous_changes[:tier_id].first.in?(Constants::ELIGIBLE_TIERS_FOR_LOUNGE)
   end
 end

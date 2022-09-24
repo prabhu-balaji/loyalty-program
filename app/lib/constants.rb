@@ -31,13 +31,19 @@ module Constants
       id: 4,
       name: 'birthday_reward_program',
       description: 'A Free Coffee reward is given to all users during their birthday month'
+    },
+    {
+      id: 5,
+      name: "lounge_access_reward_program",
+      description: 'Give 4x Airport Lounge Access Reward when a user becomes a gold tier customer'
     }
   ].freeze # TODO: Move to db. keeping this hardcoded for now. Ideally clients should be able to create reward programs & configure rules by themselves.
 
   REWARDS_MAPPING = {
     coffee: "Coffee",
     movie_ticket: "Movie Ticket",
-    cash_rebate: "5% cash rebate"
+    cash_rebate: "5% cash rebate",
+    lounge_access: "Lounge Access"
   }.freeze
 
   CUSTOMER_TIERS = {
@@ -45,6 +51,8 @@ module Constants
     gold: 2,
     platinum: 3
   }.freeze
+
+  ELIGIBLE_TIERS_FOR_LOUNGE = [Constants::CUSTOMER_TIERS[:gold], Constants::CUSTOMER_TIERS[:platinum]].freeze
 
   REWARD_EXPIRED_ERROR = "Reward has expired."
   INSUFFICIENT_QUANTITY = "Insufficient quantity"

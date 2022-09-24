@@ -3,3 +3,4 @@
 Reward.find_or_create_by(name: Constants::REWARDS_MAPPING[:coffee])
 Reward.find_or_create_by(name: Constants::REWARDS_MAPPING[:movie_ticket])
 Reward.find_or_create_by(name: Constants::REWARDS_MAPPING[:cash_rebate]) # Hard coding now. This should be a client configuration when accepting to create reward programs via API
+Reward.find_or_create_by(name: Constants::REWARDS_MAPPING[:lounge_access])
