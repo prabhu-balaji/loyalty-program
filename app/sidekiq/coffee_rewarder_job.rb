@@ -2,7 +2,7 @@ class CoffeeRewarderJob
   include Sidekiq::Job
 
   def perform(*args)
-    logger.info("rewarding Coffee")
+    logger.info("Running CoffeeRewarderJob :: #{DateTime.current.to_s}")
     Customer.find_each(batch_size: 200).each do |customer|
       begin
         reward_coffee_for_customer(customer) if eligible_for_coffee_reward?(customer)
