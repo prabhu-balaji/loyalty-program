@@ -7,3 +7,6 @@ new_year_points_expirer:
 movie_ticket_rewarder:
   cron: "0 1 * * *"
   class: "MovieTicketRewarderJob"
+cash_rebate_awarder:
+  cron: "0 3 1 * *"
+  class: "CashRebateJob"

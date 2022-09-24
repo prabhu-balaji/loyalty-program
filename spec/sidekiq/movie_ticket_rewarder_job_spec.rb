@@ -9,7 +9,7 @@ RSpec.describe MovieTicketRewarderJob, type: :job do
   end
 
   it "should not consider customers with first txn beyond last 60 days" do
-    assert Sidekiq::Cron::Job.find("movie_ticket_rewarder").cron == "0 1 * * *"
+    assert YAML.load_file("config/schedule.yml")["movie_ticket_rewarder"]["cron"] == "0 1 * * *"
     customer = FactoryBot.create(:customer)
 
     MovieTicketRewarderJob.new.perform
