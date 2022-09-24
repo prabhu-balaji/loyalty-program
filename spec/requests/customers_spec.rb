@@ -79,6 +79,7 @@ RSpec.describe "Customers", type: :request do
       expect(response_json['external_id']).to eql(customer.external_id)
       expect(response_json['created_at']).to eql(customer.created_at.to_time.iso8601)
       expect(response_json['points']).to eql(0)
+      expect(response_json['tier']).to eql('STANDARD')
 
       # Making columns empty and checking response
       customer.update(name: nil, email: nil, birthday: nil)

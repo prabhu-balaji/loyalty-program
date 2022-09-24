@@ -140,12 +140,12 @@ RSpec.describe "Customers", type: :request do
       expect(response_json["customer_rewards"][0]['id']).to eql(customer_reward_1.gid)
       expect(response_json["customer_rewards"][0]['quantity']).to eql(customer_reward_1.quantity)
       expect(response_json["customer_rewards"][0]['expires_at']).to eql(customer_reward_1.expires_at.to_time.iso8601)
-      expect(response_json["customer_rewards"][0]['name']).to eql("coffee")
+      expect(response_json["customer_rewards"][0]['name']).to eql("Coffee")
 
       expect(response_json["customer_rewards"][1]['id']).to eql(customer_reward_2.gid)
       expect(response_json["customer_rewards"][1]['quantity']).to eql(customer_reward_2.quantity)
       expect(response_json["customer_rewards"][1]['expires_at']).to eql(nil)
-      expect(response_json["customer_rewards"][1]['name']).to eql("coffee")
+      expect(response_json["customer_rewards"][1]['name']).to eql("Coffee")
 
       ## Lets claim customer_reward_2. Quantity 2 and then 2
       post "/api/v1/customers/#{customer.gid}/claim-reward", params: {
@@ -161,12 +161,12 @@ RSpec.describe "Customers", type: :request do
       expect(response_json["customer_rewards"][0]['id']).to eql(customer_reward_1.gid)
       expect(response_json["customer_rewards"][0]['quantity']).to eql(customer_reward_1.quantity)
       expect(response_json["customer_rewards"][0]['expires_at']).to eql(customer_reward_1.expires_at.to_time.iso8601)
-      expect(response_json["customer_rewards"][0]['name']).to eql("coffee")
+      expect(response_json["customer_rewards"][0]['name']).to eql("Coffee")
 
       expect(response_json["customer_rewards"][1]['id']).to eql(customer_reward_2.gid)
       expect(response_json["customer_rewards"][1]['quantity']).to eql(2)
       expect(response_json["customer_rewards"][1]['expires_at']).to eql(nil)
-      expect(response_json["customer_rewards"][1]['name']).to eql("coffee")
+      expect(response_json["customer_rewards"][1]['name']).to eql("Coffee")
 
       post "/api/v1/customers/#{customer.gid}/claim-reward", params: {
         quantity: 2, customer_reward_id: customer_reward_2.gid
@@ -181,7 +181,7 @@ RSpec.describe "Customers", type: :request do
       expect(response_json["customer_rewards"][0]['id']).to eql(customer_reward_1.gid)
       expect(response_json["customer_rewards"][0]['quantity']).to eql(customer_reward_1.quantity)
       expect(response_json["customer_rewards"][0]['expires_at']).to eql(customer_reward_1.expires_at.to_time.iso8601)
-      expect(response_json["customer_rewards"][0]['name']).to eql("coffee")
+      expect(response_json["customer_rewards"][0]['name']).to eql("Coffee")
 
       # creating expired reward
       customer_reward_3 = customer.grant_reward(reward_id: coffee_reward.id, quantity: 4,
@@ -195,7 +195,7 @@ RSpec.describe "Customers", type: :request do
       expect(response_json["customer_rewards"][0]['id']).to eql(customer_reward_1.gid)
       expect(response_json["customer_rewards"][0]['quantity']).to eql(customer_reward_1.quantity)
       expect(response_json["customer_rewards"][0]['expires_at']).to eql(customer_reward_1.expires_at.to_time.iso8601)
-      expect(response_json["customer_rewards"][0]['name']).to eql("coffee")
+      expect(response_json["customer_rewards"][0]['name']).to eql("Coffee")
     end
   end
 end

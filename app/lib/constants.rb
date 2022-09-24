@@ -40,6 +40,12 @@ module Constants
     cash_rebate: "5% cash rebate"
   }.freeze
 
+  CUSTOMER_TIERS = {
+    standard: 1,
+    gold: 2,
+    platinum: 3
+  }.freeze
+
   REWARD_EXPIRED_ERROR = "Reward has expired."
   INSUFFICIENT_QUANTITY = "Insufficient quantity"
   INVALID_QUANTITY = "Invalid quantity"
