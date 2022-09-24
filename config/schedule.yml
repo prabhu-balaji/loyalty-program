@@ -1,0 +1,3 @@
+coffee_rewarder:
+  cron: "*/1 * * * *"
+  class: "CoffeeRewarderJob"
