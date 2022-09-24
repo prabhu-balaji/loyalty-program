@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_23_212954) do
+ActiveRecord::Schema.define(version: 2022_09_24_060429) do
   create_table "customer_points_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
                                           force: :cascade do |t|
     t.bigint "customer_id", null: false
@@ -21,6 +21,19 @@ ActiveRecord::Schema.define(version: 2022_09_23_212954) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id"], name: "index_customer_points_entries_on_customer_id"
     t.index ["transaction_id"], name: "index_customer_points_entries_on_transaction_id"
+  end
+
+  create_table "customer_rewards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+                                   force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.bigint "reward_id", null: false
+    t.bigint "reward_program_id"
+    t.decimal "quantity", precision: 10
+    t.integer "status", limit: 1
+    t.datetime "expires_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_customer_rewards_on_customer_id"
   end
 
   create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
@@ -35,6 +48,15 @@ ActiveRecord::Schema.define(version: 2022_09_23_212954) do
     t.decimal "points", precision: 20, default: "0"
     t.index ["external_id"], name: "index_customers_on_external_id", unique: true
     t.index ["gid"], name: "index_customers_on_gid"
+  end
+
+  create_table "rewards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+                          force: :cascade do |t|
+    t.string "gid", limit: 40, null: false
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gid"], name: "index_rewards_on_gid"
   end
 
   create_table "transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
