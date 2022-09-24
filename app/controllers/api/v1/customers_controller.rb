@@ -29,6 +29,15 @@ module Api
         render json: { success: true }
       end
 
+      def customer_rewards
+        customer = Customer.find_by_gid!(params[:id])
+        available_customer_rewards = customer.customer_rewards.available_rewards.includes(:reward).to_a
+        render json: available_customer_rewards,
+               root: "customer_rewards",
+               each_serializer: CustomerRewardsSerializer,
+               adapter: :json
+      end
+
       private
 
       def customer_params
