@@ -8,4 +8,8 @@ class CustomerReward < ApplicationRecord
     active: 1,
     redeemed: 2
   }.freeze
+
+  def expired?
+    @expired ||= self.expires_at.present? && self.expires_at > DateTime.current.utc
+  end
 end

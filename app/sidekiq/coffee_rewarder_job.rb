@@ -26,11 +26,11 @@ class CoffeeRewarderJob
   end
 
   def previous_month_beginning
-    (DateTime.current - 1.month).beginning_of_month
+    (DateTime.current.utc - 1.month).beginning_of_month
   end
 
   def previous_month_end
-    (DateTime.current - 1.month).end_of_month
+    (DateTime.current.utc - 1.month).end_of_month
   end
 
   def reward_coffee_for_customer(customer)
@@ -55,7 +55,7 @@ class CoffeeRewarderJob
   def reward_already_granted?(customer)
     # checking if reward was already granted to the customer, with customer_reward entry in current month.
     customer.customer_rewards.where(reward_program_id: coffee_reward_program[:id], reward_id: coffee_reward.id).where(
-      "created_at >= :start_date", { start_date: DateTime.current.beginning_of_month }
+      "created_at >= :start_date", { start_date: DateTime.current.utc.beginning_of_month }
     ).exists?
   end
 end

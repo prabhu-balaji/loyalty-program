@@ -27,11 +27,11 @@ RSpec.describe CoffeeRewarderJob, type: :job do
     secondary_customer_2 = FactoryBot.create(:customer)
 
     create_customer_points_entry(customer: primary_customer, points: 100,
-                                 created_at: (DateTime.current - 1.month))
+                                 created_at: (DateTime.current.utc - 1.month))
     create_customer_points_entry(customer: secondary_customer_1, points: 100,
-                                 created_at: (DateTime.current))
+                                 created_at: (DateTime.current.utc))
     create_customer_points_entry(customer: secondary_customer_2, points: 100,
-                                 created_at: DateTime.current - 2.months)
+                                 created_at: DateTime.current.utc - 2.months)
 
     [primary_customer, secondary_customer_1, secondary_customer_2].each { |customer|
       expect(customer.customer_points_entries.sum(:points)).to eql(100)
@@ -65,15 +65,15 @@ RSpec.describe CoffeeRewarderJob, type: :job do
 
     # Granting 180 points in total to primary customer
     create_customer_points_entry(customer: primary_customer, points: 80,
-                                 created_at: (DateTime.current - 1.month))
+                                 created_at: (DateTime.current.utc - 1.month))
     create_customer_points_entry(customer: primary_customer, points: 100,
-                                 created_at: (DateTime.current - 1.month))
+                                 created_at: (DateTime.current.utc - 1.month))
 
     # Granting 99 points in total to secondary customer
     create_customer_points_entry(customer: secondary_customer, points: 98,
-                                 created_at: (DateTime.current - 1.month))
+                                 created_at: (DateTime.current.utc - 1.month))
     create_customer_points_entry(customer: secondary_customer, points: 1,
-                                 created_at: (DateTime.current - 1.month))
+                                 created_at: (DateTime.current.utc - 1.month))
 
     expect(primary_customer.customer_points_entries.sum(:points)).to eql(180)
     expect(secondary_customer.customer_points_entries.sum(:points)).to eql(99)

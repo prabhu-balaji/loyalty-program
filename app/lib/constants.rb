@@ -17,4 +17,10 @@ module Constants
       description: 'If the end user accumulates 100 points in one calendar month they are given a Free Coffee reward'
     }
   ].freeze # TODO: Move to db. keeping this hardcoded for now. Ideally clients should be able to create reward programs by themselves.
+
+  REWARD_EXPIRED_ERROR = "Reward has expired."
+  INSUFFICIENT_QUANTITY = "Insufficient quantity"
+  REWARD_ALREADY_CLAIMED = "Reward has already been claimed"
+  INVALID_QUANTITY = "Invalid quantity"
+
 end
