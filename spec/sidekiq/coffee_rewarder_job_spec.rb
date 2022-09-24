@@ -20,6 +20,7 @@ RSpec.describe CoffeeRewarderJob, type: :job do
   end
 
   it "should test CoffeeRewarder Job" do
+    assert Sidekiq::Cron::Job.find("coffee_rewarder").cron == "0 0 1 * *"
     #### Create 3 customers and points entries in prev month, current month and 2 months before, respectively. All above 100 points. ####
     primary_customer = FactoryBot.create(:customer)
     secondary_customer_1 = FactoryBot.create(:customer)
