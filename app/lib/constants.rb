@@ -21,6 +21,5 @@ module Constants
 
   REWARD_EXPIRED_ERROR = "Reward has expired."
   INSUFFICIENT_QUANTITY = "Insufficient quantity"
-  REWARD_ALREADY_CLAIMED = "Reward has already been claimed"
   INVALID_QUANTITY = "Invalid quantity"
 end
