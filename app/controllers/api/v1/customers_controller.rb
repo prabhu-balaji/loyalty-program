@@ -58,7 +58,7 @@ module Api
       def update_status_to_claimed(customer_reward:, quantity:)
         ActiveRecord::Base.transaction do
           CustomerReward.update_counters(customer_reward.id, quantity: -quantity)
-          CustomerReward.create!(reward_id: customer_reward.reward_id, customer_id: customer_reward.customer_id, parent_customer_reward_id: customer_reward.id,
+          customer_reward.redeemed_customer_rewards.create!(reward_id: customer_reward.reward_id, customer_id: customer_reward.customer_id,
                                  reward_program_id: customer_reward.reward_program_id, quantity: quantity, status: CustomerReward::STATUS_MAPPING[:redeemed])
         end
       end
