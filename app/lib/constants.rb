@@ -26,8 +26,19 @@ module Constants
       id: 3,
       name: 'cash_rebate_program',
       description: 'A 5% Cash Rebate reward is given to all users who have 10 or more transactions that have an amount > $100'
+    },
+    {
+      id: 4,
+      name: 'birthday_reward_program',
+      description: 'A Free Coffee reward is given to all users during their birthday month'
     }
   ].freeze # TODO: Move to db. keeping this hardcoded for now. Ideally clients should be able to create reward programs & configure rules by themselves.
+
+  REWARDS_MAPPING = {
+    coffee: "Coffee",
+    movie_ticket: "Movie Ticket",
+    cash_rebate: "5% cash rebate"
+  }.freeze
 
   REWARD_EXPIRED_ERROR = "Reward has expired."
   INSUFFICIENT_QUANTITY = "Insufficient quantity"

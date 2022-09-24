@@ -30,7 +30,7 @@ class CashRebateJob
   end
 
   def cash_rebate_reward
-    @coffee_reward = Reward.find_by_name('five_percent_cash_rebate')
+    @coffee_reward = Reward.find_by_name(Constants::REWARDS_MAPPING[:cash_rebate])
   end
 
   def previous_month_beginning

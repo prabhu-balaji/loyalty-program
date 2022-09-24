@@ -10,3 +10,6 @@ movie_ticket_rewarder:
 cash_rebate_awarder:
   cron: "0 3 1 * *"
   class: "CashRebateJob"
+birthday_rewarder:
+  cron: "0 2 1 * *"
+  class: "BirthdayMonthRewardJob"
