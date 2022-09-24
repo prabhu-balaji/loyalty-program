@@ -22,15 +22,11 @@ module Api
       end
 
       def claim_reward
-        customer = Customer.find_by_gid(reward_claim_params[:id])
-        raise ObjectNotFound.new(object_name: 'Customer') if customer.blank?
-
-        customer_reward = customer.customer_rewards.where(gid: reward_claim_params[:customer_reward_id],
-                                                          status: CustomerReward::STATUS_MAPPING[:active]).first
-        raise ObjectNotFound.new(object_name: 'Customer Reward') if customer_reward.blank?
-
-        validate_reward_criteria(customer_reward)
-        update_status_to_claimed(customer_reward: customer_reward, quantity: reward_claim_params[:quantity])
+        RewardClaimer.call(
+          customer_id: reward_claim_params[:id],
+          customer_reward_id: reward_claim_params[:customer_reward_id],
+          quantity: reward_claim_params[:quantity]
+        )
         render json: { success: true }
       end
 
@@ -42,25 +38,11 @@ module Api
 
       def validate_reward_claim_params
         reward_claim_params.require([:quantity, :customer_reward_id, :id])
-        reward_claim_params[:quantity] = reward_claim_params[:quantity]
         raise ApplicationBaseException.new(message: Constants::INVALID_QUANTITY) unless reward_claim_params[:quantity] > 0
       end
 
       def reward_claim_params
         @reward_claim_params ||= params.permit(:customer_reward_id, :quantity, :id)
-      end
-
-      def validate_reward_criteria(customer_reward) # TODO: can refactor and move to model or service.
-        raise ApplicationBaseException.new(message: Constants::REWARD_EXPIRED_ERROR) if customer_reward.expired?
-        raise ApplicationBaseException.new(message: Constants::INSUFFICIENT_QUANTITY) if params[:quantity] > customer_reward.quantity
-      end
-
-      def update_status_to_claimed(customer_reward:, quantity:)
-        ActiveRecord::Base.transaction do
-          CustomerReward.update_counters(customer_reward.id, quantity: -quantity)
-          customer_reward.redeemed_customer_rewards.create!(reward_id: customer_reward.reward_id, customer_id: customer_reward.customer_id,
-                                 reward_program_id: customer_reward.reward_program_id, quantity: quantity, status: CustomerReward::STATUS_MAPPING[:redeemed])
-        end
       end
     end
   end

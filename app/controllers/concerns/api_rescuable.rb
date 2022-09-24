@@ -3,6 +3,7 @@ module ApiRescuable
 
   included do
     rescue_from ApplicationBaseException, with: :handle_exception
+    rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
     rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
   end
 
@@ -20,5 +21,11 @@ module ApiRescuable
     render json: {
       description: format(Constants::UNIQUENESS_EXCEPTION_MESSAGE, model_name: model_name, field_name: field_name)
     }, status: 409
+  end
+
+  def handle_record_not_found(exception)
+    render json: {
+      description: "#{exception.model} not found"
+    }, status: 404
   end
 end

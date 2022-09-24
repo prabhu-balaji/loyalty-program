@@ -25,7 +25,7 @@ RSpec.describe "Customers", type: :request do
           quantity: 1, customer_reward_id: "random"
         }, headers: api_request_headers, as: :json
         expect(response).to have_http_status(404)
-        expect(response.parsed_body['description']).to eql('Customer Reward not found')
+        expect(response.parsed_body['description']).to eql('CustomerReward not found')
       end
 
       it "should throw 400 for when customer_reward has expired" do
