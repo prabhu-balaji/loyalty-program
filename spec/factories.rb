@@ -11,4 +11,8 @@ FactoryBot.define do
     external_id { KSUID.new.to_s }
     customer_id { FactoryBot.create(:customer).id }
   end
+
+  factory :reward do
+    name { Faker::Name.name }
+  end
 end
