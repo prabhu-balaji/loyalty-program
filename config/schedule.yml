@@ -4,3 +4,6 @@ coffee_rewarder:
 new_year_points_expirer:
   cron: "0 0 1 1 *"
   class: "PointsExpiryJob"
+movie_ticket_rewarder:
+  cron: "0 1 * * *"
+  class: "MovieTicketRewarderJob"

@@ -18,7 +18,6 @@ class MovieTicketRewarderJob
     customer_reward = customer.grant_reward(reward_id: movie_reward.id, quantity: 1,
                                             reward_program_id: movie_reward_program[:id])
     logger.error("MovieTicketRewarderJob::Error for customer #{customer.id}") if customer_reward.id.blank?
-
   end
 
   def eligible_for_movie_ticket?(customer)
@@ -32,7 +31,8 @@ class MovieTicketRewarderJob
   end
 
   def first_txn_beyond_last_60_days?(customer)
-    customer.transactions.order(:id).first.created_at < DateTime.current.utc.beginning_of_day - 60.days # If customer's first transaction is within last 60 days range.
+    customer.transactions.exists? &&
+      customer.transactions.order(:id).first.created_at < DateTime.current.utc.beginning_of_day - 60.days # If customer's first transaction is within last 60 days range.
   end
 
   def movie_reward_program
