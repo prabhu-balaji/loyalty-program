@@ -46,4 +46,14 @@ module HelperMethods
   def movie_reward
     @movie_reward ||= Reward.find_by_name('movie_ticket')
   end
+
+  def cash_rebate_program
+    @cash_rebate_program ||= Constants::REWARD_PROGRAMS.find { |reward_program|
+      reward_program[:name].eql?('cash_rebate_program')
+    }
+  end
+
+  def cash_rebate_reward
+    cash_rebate_reward ||= Reward.find_by_name('five_percent_cash_rebate')
+  end
 end

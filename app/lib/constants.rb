@@ -21,6 +21,11 @@ module Constants
       id: 2,
       name: 'movie_reward_program',
       description: 'A Free Movie Tickets reward is given to new users when their spending is > $1000 within 60 days of their first transaction'
+    },
+    {
+      id: 3,
+      name: 'cash_rebate_program',
+      description: 'A 5% Cash Rebate reward is given to all users who have 10 or more transactions that have an amount > $100'
     }
   ].freeze # TODO: Move to db. keeping this hardcoded for now. Ideally clients should be able to create reward programs & configure rules by themselves.
 
