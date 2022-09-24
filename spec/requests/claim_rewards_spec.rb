@@ -55,7 +55,7 @@ RSpec.describe "Customers", type: :request do
       it "should return success for reward claim" do
         customer = FactoryBot.create(:customer)
         customer_reward = customer.grant_reward(reward_id: coffee_reward.id, quantity: 1,
-                                                expires_at: DateTime.current.utc + 1.day)
+                                                expires_at: DateTime.current.utc)
         post "/api/v1/customers/#{customer.gid}/claim-reward", params: {
           quantity: 1, customer_reward_id: customer_reward.gid
         }, headers: api_request_headers, as: :json
