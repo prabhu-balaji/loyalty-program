@@ -1,3 +1,4 @@
+require 'sidekiq/web'
 Sidekiq.configure_server do |config|
   config.on(:startup) do
     schedule_file = "config/schedule.yml"

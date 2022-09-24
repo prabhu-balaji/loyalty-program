@@ -6,4 +6,5 @@ Rails.application.routes.draw do
       resources :transactions, only: [:create, :show]
     end
   end
+  mount Sidekiq::Web => "/sidekiq" if Rails.env.development? # mount Sidekiq::Web in your Rails app
 end
