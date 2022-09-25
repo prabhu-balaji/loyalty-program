@@ -34,7 +34,7 @@ RSpec.describe CashRebateJob, type: :job do
     customer_reward = customer.customer_rewards.first
     expect(customer_reward.reward_id).to eql(cash_rebate_reward.id)
     expect(customer_reward.reward_program_id).to eql(cash_rebate_program[:id])
-    expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(customer_reward.quantity).to eql(1)
 
     ## verifying it doesnt recalculate ##
@@ -42,7 +42,7 @@ RSpec.describe CashRebateJob, type: :job do
     customer_reward = customer.reload.customer_rewards.first
     expect(customer_reward.reward_id).to eql(cash_rebate_reward.id)
     expect(customer_reward.reward_program_id).to eql(cash_rebate_program[:id])
-    expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(customer_reward.quantity).to eql(1)
   end
 
@@ -57,7 +57,7 @@ RSpec.describe CashRebateJob, type: :job do
     customer_reward = customer.customer_rewards.first
     expect(customer_reward.reward_id).to eql(cash_rebate_reward.id)
     expect(customer_reward.reward_program_id).to eql(cash_rebate_program[:id])
-    expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(customer_reward.quantity).to eql(1)
 
     ## verifying it doesnt recalculate ##
@@ -65,7 +65,7 @@ RSpec.describe CashRebateJob, type: :job do
     customer_reward = customer.reload.customer_rewards.first
     expect(customer_reward.reward_id).to eql(cash_rebate_reward.id)
     expect(customer_reward.reward_program_id).to eql(cash_rebate_program[:id])
-    expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(customer_reward.quantity).to eql(1)
   end
 end

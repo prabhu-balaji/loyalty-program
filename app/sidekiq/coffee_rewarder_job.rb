@@ -1,6 +1,8 @@
 class CoffeeRewarderJob
   include Sidekiq::Job
 
+  MINIMUM_POINTS = 100.freeze
+
   def perform(*args)
     logger.info("Running CoffeeRewarderJob :: #{DateTime.current.to_s}")
     Customer.find_each(batch_size: 200).each do |customer|
@@ -22,7 +24,7 @@ class CoffeeRewarderJob
         start_date: previous_month_beginning, end_date: previous_month_end
       }
     ).sum(:points) # transaction id is not null condition is to prevent evaluating on bonus points.
-    points >= 100
+    points >= MINIMUM_POINTS
   end
 
   def previous_month_beginning
@@ -35,7 +37,7 @@ class CoffeeRewarderJob
 
   def reward_coffee(customer)
     # can be a model method
-    customer_reward = customer.grant_reward(reward_id: coffee_reward.id, quantity: 1,
+    customer_reward = customer.grant_reward(reward_id: coffee_reward.id, quantity: coffee_reward_program[:quantity],
                                             reward_program_id: coffee_reward_program[:id])
     if customer_reward.id.blank?
       logger.error("CoffeeRewarderJob::Error for customer #{customer.id}")

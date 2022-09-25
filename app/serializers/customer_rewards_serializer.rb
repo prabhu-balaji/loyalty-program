@@ -1,5 +1,4 @@
 class CustomerRewardsSerializer < BaseModelSerializer
-  self.config.adapter = :json
   attributes :id, :quantity, :expires_at, :name
 
   def name

@@ -15,17 +15,9 @@ class Customer < ApplicationRecord
       reward_id: reward_id,
       reward_program_id: reward_program_id,
       quantity: quantity,
-      status: CustomerReward::STATUS_MAPPING[:active],
+      status: CustomerReward::STATUS[:active],
       expires_at: expires_at
     )
-  end
-
-  def grant_points(points:, transaction_id: nil, reward_program_id: nil)
-    ActiveRecord::Base.transaction do
-      self.customer_points_entries.create!(customer_id: self.id, points: points, transaction_id: transaction_id,
-                                           reward_program_id: reward_program_id)
-      Customer.update_counters(self.id, points: points)
-    end
   end
 
   private
@@ -39,7 +31,7 @@ class Customer < ApplicationRecord
     reward_program = Constants::REWARD_PROGRAMS.find { |reward_program|
       reward_program[:name].eql?('lounge_access_reward_program')
     }
-    self.grant_reward(reward_id: lounge_access_reward.id, quantity: 4, reward_program_id: reward_program[:id]) # Not putting expiry for now.
+    self.grant_reward(reward_id: lounge_access_reward.id, quantity: reward_program[:quantity], reward_program_id: reward_program[:id]) # Not putting expiry for now.
   end
 
   def grant_lounge_access_reward?
@@ -51,6 +43,7 @@ class Customer < ApplicationRecord
     lounge_access_reward_program = Constants::REWARD_PROGRAMS.find { |reward_program|
       reward_program[:name].eql?('lounge_access_reward_program')
     }
+    # also checking if reward has been already granted under the reward program in this calendar year.
     tier_id_key_changed && !reward_already_granted?(reward_id: lounge_access_reward.id,
                                                     reward_program_id: lounge_access_reward_program[:id], start_date: DateTime.current.utc.beginning_of_year, end_date: DateTime.current.utc.end_of_year)
   end

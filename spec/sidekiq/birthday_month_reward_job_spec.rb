@@ -31,7 +31,7 @@ RSpec.describe BirthdayMonthRewardJob, type: :job do
     primary_customer_rewards = customer_coffee_rewards(customer_1)
     expect(primary_customer_rewards.to_a.size).to eql(1)
     primary_customer_reward = primary_customer_rewards.first
-    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(primary_customer_reward.quantity).to eql(1)
     expect(primary_customer_reward.expires_at.to_time.iso8601).to eql(DateTime.current.end_of_month.in_time_zone.to_time.iso8601)
 
@@ -44,7 +44,7 @@ RSpec.describe BirthdayMonthRewardJob, type: :job do
     primary_customer_rewards = customer_coffee_rewards(customer_1)
     expect(primary_customer_rewards.to_a.size).to eql(1)
     primary_customer_reward = primary_customer_rewards.first
-    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(primary_customer_reward.quantity).to eql(1)
   end
 end

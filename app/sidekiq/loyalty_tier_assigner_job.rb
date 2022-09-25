@@ -20,11 +20,12 @@ class LoyaltyTierAssignerJob
   end
 
   def calculate_loyalty_tier(customer)
+    ### Calculating loyalty tier based on maximum points of previous two cycles ####
     loyalty_points = [points_accumulated_in_cycle(customer: customer, cycle: 1),
                       points_accumulated_in_cycle(customer: customer, cycle: 2)].max
-    if loyalty_points >= 5000
+    if loyalty_points >= Constants::CUSTOMER_TIER_POINTS_MAPPING[:platinum]
       Constants::CUSTOMER_TIERS[:platinum]
-    elsif loyalty_points >= 1000
+    elsif loyalty_points >= Constants::CUSTOMER_TIER_POINTS_MAPPING[:gold]
       Constants::CUSTOMER_TIERS[:gold]
     else
       Constants::CUSTOMER_TIERS[:standard]

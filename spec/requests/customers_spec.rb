@@ -81,6 +81,12 @@ RSpec.describe "Customers", type: :request do
       expect(response_json['points']).to eql(0)
       expect(response_json['tier']).to eql('STANDARD')
 
+      ## update tier to platinum and check response ##
+      customer.update(tier_id: Constants::CUSTOMER_TIERS[:platinum])
+      get "/api/v1/customers/#{customer.gid}", headers: api_request_headers
+      expect(response).to have_http_status(200)
+      expect(response.parsed_body['tier']).to eql('PLATINUM')
+
       # Making columns empty and checking response
       customer.update(name: nil, email: nil, birthday: nil)
       get "/api/v1/customers/#{customer.gid}", headers: api_request_headers

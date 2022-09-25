@@ -92,7 +92,7 @@ RSpec.describe "Customers", type: :request do
         expect(redeemed_customer_reward.reward_id).to eql(coffee_reward.id)
         expect(redeemed_customer_reward.reward_program_id).to eql(coffee_reward_program[:id])
         expect(redeemed_customer_reward.quantity).to eql(1)
-        expect(redeemed_customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:redeemed])
+        expect(redeemed_customer_reward.status).to eql(CustomerReward::STATUS[:redeemed])
 
         post "/api/v1/customers/#{customer.gid}/claim-reward", params: {
           quantity: 3, customer_reward_id: customer_reward.gid
@@ -108,7 +108,7 @@ RSpec.describe "Customers", type: :request do
         expect(redeemed_customer_reward.reward_id).to eql(coffee_reward.id)
         expect(redeemed_customer_reward.reward_program_id).to eql(coffee_reward_program[:id])
         expect(redeemed_customer_reward.quantity).to eql(3)
-        expect(redeemed_customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:redeemed])
+        expect(redeemed_customer_reward.status).to eql(CustomerReward::STATUS[:redeemed])
       end
     end
   end

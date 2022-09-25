@@ -8,7 +8,7 @@ class RewardClaimer < ApplicationService
   def call
     customer = Customer.find_by_gid!(@customer_id)
     customer_reward = customer.customer_rewards.where(gid: @customer_reward_id,
-                                                      status: CustomerReward::STATUS_MAPPING[:active]).first!
+                                                      status: CustomerReward::STATUS[:active]).first!
     validate_reward_criteria(customer_reward)
     update_reward_qty_and_status(customer_reward: customer_reward)
   end
@@ -37,7 +37,7 @@ class RewardClaimer < ApplicationService
       customer_id: customer_reward.customer_id,
       reward_program_id: customer_reward.reward_program_id,
       quantity: @quantity,
-      status: CustomerReward::STATUS_MAPPING[:redeemed]
+      status: CustomerReward::STATUS[:redeemed]
     )
   end
 end
