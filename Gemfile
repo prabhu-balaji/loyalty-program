@@ -46,3 +46,4 @@ gem 'ksuid', '~> 0.5.0'
 gem 'active_model_serializers', '0.10.13'
 gem 'sidekiq', '~> 6.5.7'
 gem "sidekiq-cron", '~> 1.7.0'
+gem 'simplecov', require: false, group: :test
