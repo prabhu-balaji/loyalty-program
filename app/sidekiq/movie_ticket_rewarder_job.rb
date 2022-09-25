@@ -33,7 +33,7 @@ class MovieTicketRewarderJob
 
   def first_txn_beyond_last_60_days?(customer)
     customer.transactions.exists? &&
-      customer.transactions.order(:id).first.created_at < DateTime.current.utc.beginning_of_day - 60.days # If customer's first transaction is within last 60 days range.
+      customer.transactions.order(:id).first.transaction_date < DateTime.current.utc.beginning_of_day - 60.days # If customer's first transaction is within last 60 days range.
   end
 
   def movie_reward_program

@@ -27,7 +27,7 @@ class CashRebateJob
     # 10 or more transactions that have an amount > $100 in last month
     return false if reward_already_granted?(customer)
 
-    customer.transactions.where("created_at >= :start_date and created_at <= :end_date and amount > #{MINIMUM_TRANSACTION_AMOUNT}", {
+    customer.transactions.where("transaction_date >= :start_date and transaction_date <= :end_date and amount > #{MINIMUM_TRANSACTION_AMOUNT}", {
                                   start_date: previous_month_beginning, end_date: previous_month_end
                                 }).count >= MINIMUM_TRANSACTION_COUNT
   end
