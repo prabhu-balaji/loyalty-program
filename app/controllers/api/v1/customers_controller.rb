@@ -16,7 +16,6 @@ module Api
 
       def show
         customer = Customer.find_by_gid!(params[:id])
-
         render json: customer
       end
 

@@ -18,7 +18,6 @@ module Api
 
       def show
         transaction = Transaction.find_by_gid!(params[:id])
-
         render json: transaction
       end
 
