@@ -15,12 +15,14 @@ module Constants
     {
       id: 1,
       name: 'coffee_reward_program',
-      description: 'If the end user accumulates 100 points in one calendar month they are given a Free Coffee reward'
+      description: 'If the end user accumulates 100 points in one calendar month they are given a Free Coffee reward',
+      quantity: 1
     },
     {
       id: 2,
       name: 'movie_reward_program',
-      description: 'A Free Movie Tickets reward is given to new users when their spending is > $1000 within 60 days of their first transaction'
+      description: 'A Free Movie Tickets reward is given to new users when their spending is > $1000 within 60 days of their first transaction',
+      quantity: 1
     },
     {
       id: 3,
@@ -30,17 +32,20 @@ module Constants
     {
       id: 4,
       name: 'birthday_reward_program',
-      description: 'A Free Coffee reward is given to all users during their birthday month'
+      description: 'A Free Coffee reward is given to all users during their birthday month',
+      quantity: 1
     },
     {
       id: 5,
       name: "lounge_access_reward_program",
-      description: 'Give 4x Airport Lounge Access Reward when a user becomes a gold tier customer'
+      description: 'Give 4x Airport Lounge Access Reward when a user becomes a gold tier customer',
+      quantity: 4
     },
     {
       id: 6,
       name: "quarterly_bonus_reward_program",
-      description: 'Every calendar quarterly give 100 bonus points for any user spending greater than $2000 in that quarter'
+      description: 'Every calendar quarterly give 100 bonus points for any user spending greater than $2000 in that quarter',
+      quantity: 100
     }
   ].freeze # TODO: Move to db. keeping this hardcoded for now. Ideally clients should be able to create reward programs & configure rules by themselves.
 

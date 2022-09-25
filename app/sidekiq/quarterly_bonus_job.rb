@@ -34,7 +34,8 @@ class QuarterlyBonusJob
   end
 
   def reward_points(customer)
-    PointsGranter.call(points: 100, reward_program_id: quarterly_bonus_reward_program[:id], customer_id: customer.id)
+    PointsGranter.call(points: quarterly_bonus_reward_program[:quantity],
+                       reward_program_id: quarterly_bonus_reward_program[:id], customer_id: customer.id)
   end
 
   def quarterly_bonus_reward_program

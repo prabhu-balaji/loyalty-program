@@ -35,7 +35,7 @@ class CoffeeRewarderJob
 
   def reward_coffee(customer)
     # can be a model method
-    customer_reward = customer.grant_reward(reward_id: coffee_reward.id, quantity: 1,
+    customer_reward = customer.grant_reward(reward_id: coffee_reward.id, quantity: coffee_reward_program[:quantity],
                                             reward_program_id: coffee_reward_program[:id])
     if customer_reward.id.blank?
       logger.error("CoffeeRewarderJob::Error for customer #{customer.id}")

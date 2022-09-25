@@ -15,7 +15,7 @@ class MovieTicketRewarderJob
   private
 
   def reward_movie_ticket(customer)
-    customer_reward = customer.grant_reward(reward_id: movie_reward.id, quantity: 1,
+    customer_reward = customer.grant_reward(reward_id: movie_reward.id, quantity: movie_reward_program[:quantity],
                                             reward_program_id: movie_reward_program[:id])
     logger.error("MovieTicketRewarderJob::Error for customer #{customer.id}") if customer_reward.id.blank?
   end
