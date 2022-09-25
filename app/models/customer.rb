@@ -21,11 +21,8 @@ class Customer < ApplicationRecord
   end
 
   def grant_points(points:, transaction_id: nil, reward_program_id: nil)
-    ActiveRecord::Base.transaction do
-      self.customer_points_entries.create!(customer_id: self.id, points: points, transaction_id: transaction_id,
-                                           reward_program_id: reward_program_id)
-      Customer.update_counters(self.id, points: points)
-    end
+    PointsGranter.call(points: points, transaction_id: transaction_id, reward_program_id: reward_program_id,
+                       customer_id: self.id)
   end
 
   private

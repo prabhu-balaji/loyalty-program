@@ -37,7 +37,7 @@ class Transaction < ApplicationRecord
 
   def add_points_for_transaction(points)
     begin
-      self.customer.grant_points(points: points, transaction_id: self.id,)
+      PointsGranter.call(points: points, transaction_id: self.id, customer_id: self.customer_id)
     rescue StandardError => exception
       logger.error "Failed while adding points for transaction :: transaction_id: #{self.id} :: #{exception.message}"
     end

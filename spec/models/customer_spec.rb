@@ -96,7 +96,6 @@ RSpec.describe Customer, type: :model do
       expect(customer_reward.reward_program_id).to eql(lounge_access_reward_program[:id])
       expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
 
-
       # upgrading from gold to platinum should not grant reward
       customer.tier_id = Constants::CUSTOMER_TIERS[:platinum]
       customer.save
