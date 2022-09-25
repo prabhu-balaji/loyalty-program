@@ -5,7 +5,7 @@ Product Requirements - https://github.com/PerxTech/backend-interview
 
 Postman API collection - https://documenter.getpostman.com/view/11290012/2s83S6eBYC
 
-Tech design - https://www.notion.so/Design-for-Loyalty-program-app-71dda24155fc47999bc3238864d46b3b
+Tech design - https://curious-birth-fc5.notion.site/Design-for-Loyalty-program-app-71dda24155fc47999bc3238864d46b3b
 
 Trello board - https://trello.com/b/KvivLq54/loyalty-program-app
 
