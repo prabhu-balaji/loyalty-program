@@ -156,6 +156,23 @@ RSpec.describe "Transactions", type: :request do
         expect(response_json['amount']).to eql(amount.to_f.to_s)
         expect(response_json['external_id']).to eql(external_id)
         expect(response_json['customer_id']).to eql(@customer.gid)
+        expect(response_json['points']).to eql(transaction.reload.customer_points_entry.points)
+      end
+
+      it "should return success for transaction with no customer points entry" do
+        external_id = KSUID.new.to_s
+        amount = 1
+        transaction_date = "2020-09-23T08:33:57+08:00"
+        transaction = Transaction.create(external_id: external_id, amount: amount, transaction_date: transaction_date,
+                                         region_type: Transaction::REGION_TYPE[:domestic], customer_id: @customer.id)
+        get "/api/v1/transactions/#{transaction.gid}", headers: api_request_headers
+        expect(response).to have_http_status(200)
+        response_json = response.parsed_body
+        expect(response_json['amount']).to eql(amount.to_f.to_s)
+        expect(response_json['external_id']).to eql(external_id)
+        expect(response_json['customer_id']).to eql(@customer.gid)
+        expect(transaction.reload.customer_points_entry).to be nil
+        expect(response_json['points']).to eql(0)
       end
     end
   end

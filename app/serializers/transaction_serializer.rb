@@ -1,5 +1,5 @@
 class TransactionSerializer < BaseModelSerializer
-  attributes :id, :customer_id, :amount, :external_id, :region_type, :transaction_date
+  attributes :id, :customer_id, :amount, :external_id, :region_type, :transaction_date, :points
 
   def amount
     object.amount.to_s
@@ -15,5 +15,9 @@ class TransactionSerializer < BaseModelSerializer
 
   def customer_id
     object.customer.gid
+  end
+
+  def points
+    object.customer_points_entry.present? ? object.customer_points_entry.points : 0
   end
 end
