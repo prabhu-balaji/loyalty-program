@@ -1,6 +1,9 @@
 class CashRebateJob
   include Sidekiq::Job
 
+  MINIMUM_TRANSACTION_AMOUNT = 100.freeze
+  MINIMUM_TRANSACTION_COUNT = 10.freeze
+
   def perform(*args)
     logger.info("Running CashRebateJob :: #{DateTime.current.to_s}")
     Customer.find_each(batch_size: 200).each do |customer|
@@ -24,9 +27,9 @@ class CashRebateJob
     # 10 or more transactions that have an amount > $100 in last month
     return false if reward_already_granted?(customer)
 
-    customer.transactions.where("created_at >= :start_date and created_at <= :end_date and amount > 100", {
+    customer.transactions.where("created_at >= :start_date and created_at <= :end_date and amount > #{MINIMUM_TRANSACTION_AMOUNT}", {
                                   start_date: previous_month_beginning, end_date: previous_month_end
-                                }).count >= 10
+                                }).count >= MINIMUM_TRANSACTION_COUNT
   end
 
   def cash_rebate_reward

@@ -1,6 +1,7 @@
 class MovieTicketRewarderJob
   include Sidekiq::Job
 
+  MINIMUM_SPENDING = 1000.freeze
   def perform(*args)
     logger.info("Running MovieTicketRewarderJob :: #{DateTime.current.to_s}")
     Customer.find_each(batch_size: 200).each do |customer|
@@ -23,7 +24,7 @@ class MovieTicketRewarderJob
   def eligible_for_movie_ticket?(customer)
     !reward_already_granted?(customer) &&
       !first_txn_beyond_last_60_days?(customer) &&
-      customer.transactions.sum(:amount) > 1000
+      customer.transactions.sum(:amount) > MINIMUM_SPENDING
   end
 
   def movie_reward

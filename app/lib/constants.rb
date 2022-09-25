@@ -62,6 +62,12 @@ module Constants
     platinum: 3
   }.freeze
 
+  CUSTOMER_TIER_POINTS_MAPPING = {
+    standard: 0,
+    gold: 1000,
+    platinum: 5000
+  }.freeze
+
   ELIGIBLE_TIERS_FOR_LOUNGE = [Constants::CUSTOMER_TIERS[:gold], Constants::CUSTOMER_TIERS[:platinum]].freeze
 
   REWARD_EXPIRED_ERROR = "Reward has expired."
