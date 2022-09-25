@@ -1,5 +1,5 @@
 # Loyalty Program API Platform
- At it's most basic, the platform offers clients the ability to issue loyalty points and rewards to their end users.
+ The platform offers clients the ability to issue loyalty points and rewards to their end users.
 
 Product Requirements - https://github.com/PerxTech/backend-interview
 
