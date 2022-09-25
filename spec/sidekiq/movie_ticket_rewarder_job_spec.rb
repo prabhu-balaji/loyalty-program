@@ -59,11 +59,11 @@ RSpec.describe MovieTicketRewarderJob, type: :job do
   it "should consider customer with first txn within 60 days and multiple txn sum > 1000" do
     customer = FactoryBot.create(:customer)
 
-    customer.transactions.create(amount: 900, created_at: DateTime.current.utc - 40.days)
+    customer.transactions.create(amount: 900, transaction_date: DateTime.current.utc - 40.days)
     MovieTicketRewarderJob.new.perform
     expect(customer.reload.customer_rewards.to_a.size).to eql(0)
 
-    customer.transactions.create(amount: 101, created_at: DateTime.current.utc - 40.days)
+    customer.transactions.create(amount: 101, transaction_date: DateTime.current.utc - 40.days)
     MovieTicketRewarderJob.new.perform
     expect(customer.reload.customer_rewards.to_a.size).to eql(1)
     customer_reward = customer.customer_rewards.first

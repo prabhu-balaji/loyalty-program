@@ -27,7 +27,7 @@ RSpec.describe CashRebateJob, type: :job do
     expect(customer.reload.customer_rewards.to_a.size).to eql(0)
 
     # creating one more txn with 101$ in previous month
-    customer.transactions.create(amount: 101, created_at: DateTime.current.utc - 1.months)
+    customer.transactions.create(amount: 101, transaction_date: DateTime.current.utc - 1.months)
     CashRebateJob.new.perform
     expect(customer.reload.customer_rewards.to_a.size).to eql(1)
 
