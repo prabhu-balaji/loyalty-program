@@ -43,7 +43,21 @@ class Customer < ApplicationRecord
   end
 
   def grant_lounge_access_reward?
-    self.previous_changes.key?(:tier_id) && self.tier_id.in?(Constants::ELIGIBLE_TIERS_FOR_LOUNGE) &&
-      !self.previous_changes[:tier_id].first.in?(Constants::ELIGIBLE_TIERS_FOR_LOUNGE)
+    tier_id_key_changed = self.previous_changes.key?(:tier_id) && self.tier_id.in?(Constants::ELIGIBLE_TIERS_FOR_LOUNGE) &&
+                          !self.previous_changes[:tier_id].first.in?(Constants::ELIGIBLE_TIERS_FOR_LOUNGE)
+    return unless tier_id_key_changed
+
+    lounge_access_reward = Reward.find_by_name(Constants::REWARDS_MAPPING[:lounge_access])
+    lounge_access_reward_program = Constants::REWARD_PROGRAMS.find { |reward_program|
+      reward_program[:name].eql?('lounge_access_reward_program')
+    }
+    tier_id_key_changed && !reward_already_granted?(reward_id: lounge_access_reward.id,
+                                                    reward_program_id: lounge_access_reward_program[:id], start_date: DateTime.current.utc.beginning_of_year, end_date: DateTime.current.utc.end_of_year)
+  end
+
+  def reward_already_granted?(reward_id:, start_date:, end_date:, reward_program_id: nil)
+    self.customer_rewards.where(reward_program_id: reward_program_id, reward_id: reward_id).where(
+      "created_at >= :start_date and created_at <= :end_date", { start_date: start_date, end_date: end_date }
+    ).exists?
   end
 end
