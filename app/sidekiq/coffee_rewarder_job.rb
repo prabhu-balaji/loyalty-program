@@ -18,7 +18,7 @@ class CoffeeRewarderJob
     return false if reward_already_granted?(customer)
 
     points = customer.customer_points_entries.where(
-      "created_at >= :start_date and created_at <= :end_date and points > 0 and transaction_id is not NULL", {
+      "created_at >= :start_date and created_at <= :end_date and transaction_id is not NULL", {
         start_date: previous_month_beginning, end_date: previous_month_end
       }
     ).sum(:points) # transaction id is not null condition is to prevent evaluating on bonus points.
