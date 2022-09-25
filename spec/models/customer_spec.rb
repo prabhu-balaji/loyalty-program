@@ -80,7 +80,7 @@ RSpec.describe Customer, type: :model do
       expect(customer_reward.reward_id).to eql(lounge_access_reward.id)
       expect(customer_reward.quantity).to eql(4)
       expect(customer_reward.reward_program_id).to eql(lounge_access_reward_program[:id])
-      expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+      expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
 
       # downgrading to standard and upgrading to gold should not grant again in same calendar year.
       customer.tier_id = Constants::CUSTOMER_TIERS[:standard]
@@ -94,7 +94,7 @@ RSpec.describe Customer, type: :model do
       expect(customer_reward.reward_id).to eql(lounge_access_reward.id)
       expect(customer_reward.quantity).to eql(4)
       expect(customer_reward.reward_program_id).to eql(lounge_access_reward_program[:id])
-      expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+      expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
 
       # upgrading from gold to platinum should not grant reward
       customer.tier_id = Constants::CUSTOMER_TIERS[:platinum]
@@ -106,7 +106,7 @@ RSpec.describe Customer, type: :model do
       expect(customer_reward.reward_id).to eql(lounge_access_reward.id)
       expect(customer_reward.quantity).to eql(4)
       expect(customer_reward.reward_program_id).to eql(lounge_access_reward_program[:id])
-      expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+      expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     end
 
     it "should grant lounge access reward when upgrading from standard customer to platinum" do
@@ -123,7 +123,7 @@ RSpec.describe Customer, type: :model do
       expect(customer_reward.reward_id).to eql(lounge_access_reward.id)
       expect(customer_reward.quantity).to eql(4)
       expect(customer_reward.reward_program_id).to eql(lounge_access_reward_program[:id])
-      expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+      expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     end
   end
 end

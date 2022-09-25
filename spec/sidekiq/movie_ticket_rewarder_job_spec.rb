@@ -44,7 +44,7 @@ RSpec.describe MovieTicketRewarderJob, type: :job do
     expect(customer.reload.customer_rewards.to_a.size).to eql(1)
     customer_reward = customer.customer_rewards.first
     expect(customer_reward.reward_id).to eql(movie_reward.id)
-    expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(customer_reward.quantity).to eql(1)
 
     ## Rerunning should not add it again
@@ -52,7 +52,7 @@ RSpec.describe MovieTicketRewarderJob, type: :job do
     expect(customer.reload.customer_rewards.to_a.size).to eql(1)
     customer_reward = customer.customer_rewards.first
     expect(customer_reward.reward_id).to eql(movie_reward.id)
-    expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(customer_reward.quantity).to eql(1)
   end
 
@@ -68,7 +68,7 @@ RSpec.describe MovieTicketRewarderJob, type: :job do
     expect(customer.reload.customer_rewards.to_a.size).to eql(1)
     customer_reward = customer.customer_rewards.first
     expect(customer_reward.reward_id).to eql(movie_reward.id)
-    expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(customer_reward.quantity).to eql(1)
 
     ## Rerunning should not add it again
@@ -76,7 +76,7 @@ RSpec.describe MovieTicketRewarderJob, type: :job do
     expect(customer.reload.customer_rewards.to_a.size).to eql(1)
     customer_reward = customer.customer_rewards.first
     expect(customer_reward.reward_id).to eql(movie_reward.id)
-    expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(customer_reward.quantity).to eql(1)
   end
 
@@ -92,7 +92,7 @@ RSpec.describe MovieTicketRewarderJob, type: :job do
     expect(customer.reload.customer_rewards.to_a.size).to eql(1)
     customer_reward = customer.customer_rewards.first
     expect(customer_reward.reward_id).to eql(movie_reward.id)
-    expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(customer_reward.quantity).to eql(1)
 
     ## Rerunning should not add it again
@@ -100,7 +100,7 @@ RSpec.describe MovieTicketRewarderJob, type: :job do
     expect(customer.reload.customer_rewards.to_a.size).to eql(1)
     customer_reward = customer.customer_rewards.first
     expect(customer_reward.reward_id).to eql(movie_reward.id)
-    expect(customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(customer_reward.quantity).to eql(1)
   end
 end

@@ -32,7 +32,7 @@ RSpec.describe CoffeeRewarderJob, type: :job do
     primary_customer_rewards = customer_coffee_rewards(primary_customer)
     expect(primary_customer_rewards.to_a.size).to eql(1)
     primary_customer_reward = primary_customer_rewards.first
-    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(primary_customer_reward.quantity).to eql(1)
 
     [secondary_customer_1, secondary_customer_2].each { |customer|
@@ -44,7 +44,7 @@ RSpec.describe CoffeeRewarderJob, type: :job do
     primary_customer_rewards = customer_coffee_rewards(primary_customer)
     expect(primary_customer_rewards.to_a.size).to eql(1)
     primary_customer_reward = primary_customer_rewards.first
-    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(primary_customer_reward.quantity).to eql(1)
   end
 
@@ -73,7 +73,7 @@ RSpec.describe CoffeeRewarderJob, type: :job do
     primary_customer_rewards = customer_coffee_rewards(primary_customer)
     expect(primary_customer_rewards.to_a.size).to eql(1)
     primary_customer_reward = primary_customer_rewards.first
-    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(primary_customer_reward.quantity).to eql(1)
 
     expect(customer_coffee_rewards(secondary_customer).to_a.size).to eql(0)
@@ -83,7 +83,7 @@ RSpec.describe CoffeeRewarderJob, type: :job do
     primary_customer_rewards = customer_coffee_rewards(primary_customer)
     expect(primary_customer_rewards.to_a.size).to eql(1)
     primary_customer_reward = primary_customer_rewards.first
-    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS_MAPPING[:active])
+    expect(primary_customer_reward.status).to eql(CustomerReward::STATUS[:active])
     expect(primary_customer_reward.quantity).to eql(1)
     expect(customer_coffee_rewards(secondary_customer).to_a.size).to eql(0)
   end

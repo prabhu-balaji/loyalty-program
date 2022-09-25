@@ -9,14 +9,14 @@ class CustomerReward < ApplicationRecord
                                       optional: true
 
   scope :available_rewards, -> {
-                              where("(expires_at is NULL or expires_at > (?)) and status = (?) and quantity > 0", DateTime.current.utc, STATUS_MAPPING[:active])
+                              where("(expires_at is NULL or expires_at > (?)) and status = (?) and quantity > 0", DateTime.current.utc, STATUS[:active])
                             }
 
   validates_presence_of :status, :quantity
 
   before_validation :format_expires_at
 
-  STATUS_MAPPING = {
+  STATUS = {
     active: 1,
     redeemed: 2
   }.freeze

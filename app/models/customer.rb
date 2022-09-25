@@ -15,7 +15,7 @@ class Customer < ApplicationRecord
       reward_id: reward_id,
       reward_program_id: reward_program_id,
       quantity: quantity,
-      status: CustomerReward::STATUS_MAPPING[:active],
+      status: CustomerReward::STATUS[:active],
       expires_at: expires_at
     )
   end
