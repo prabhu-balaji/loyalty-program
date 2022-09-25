@@ -72,4 +72,10 @@ module HelperMethods
       reward_program[:name].eql?('lounge_access_reward_program')
     }
   end
+
+  def quarterly_bonus_reward_program
+    @quarterly_bonus_reward_program ||= Constants::REWARD_PROGRAMS.find { |reward_program|
+      reward_program[:name].eql?('quarterly_bonus_reward_program')
+    }
+  end
 end

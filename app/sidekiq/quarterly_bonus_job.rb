@@ -19,8 +19,9 @@ class QuarterlyBonusJob
 
     transaction_sum = customer.transactions.where(
       "transaction_date >= :start_date and transaction_date <= :end_date", {
-      start_date: previous_month_beginning, end_date: previous_month_end
-    }).sum(:amount)
+        start_date: previous_quarter_beginning, end_date: previous_quarter_end
+      }
+    ).sum(:amount)
     transaction_sum > 2000
   end
 
@@ -28,7 +29,7 @@ class QuarterlyBonusJob
     (DateTime.current.utc - 3.months).beginning_of_quarter
   end
 
-  def previous_month_end
+  def previous_quarter_end
     (DateTime.current.utc - 3.months).end_of_quarter
   end
 
@@ -45,7 +46,7 @@ class QuarterlyBonusJob
   def reward_already_granted?(customer)
     # checking if bonus was already granted to the customer, with customer_points_entry entry in current month.
     customer.customer_points_entries.where(reward_program_id: quarterly_bonus_reward_program[:id]).where(
-      "created_at >= :start_date", { start_date: DateTime.current.utc.beginning_of_month }
+      "created_at >= :start_date", { start_date: DateTime.current.utc.beginning_of_quarter }
     ).exists?
   end
 end
