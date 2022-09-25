@@ -21,6 +21,9 @@ RSpec.describe LoyaltyTierAssignerJob, type: :job do
                                  created_at: (DateTime.current.utc - 1.month))
     create_customer_points_entry(customer: customer, points: 999,
                                  created_at: (DateTime.current.utc - 2.months))
+
+    create_customer_points_entry(customer: customer, points: 10000,
+                                 created_at: DateTime.current.utc) # current cycle shouldnt affect
     LoyaltyTierAssignerJob.new.perform
     expect(customer.reload.tier_id).to eql(Constants::CUSTOMER_TIERS[:standard])
   end
