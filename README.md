@@ -30,5 +30,6 @@ App runs on rails 6.0.6.
     manual download link - https://redis.io/download/
 2. Run `sidekiq` 
 
-
+Rspec Code coverage: 98.57 %
+![Code coverage](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/16697168-0ed2-4cf4-b150-b0723dccab8a/Untitled.png)
 
