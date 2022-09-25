@@ -36,6 +36,11 @@ module Constants
       id: 5,
       name: "lounge_access_reward_program",
       description: 'Give 4x Airport Lounge Access Reward when a user becomes a gold tier customer'
+    },
+    {
+      id: 6,
+      name: "quarterly_bonus_reward_program",
+      description: 'Every calendar quarterly give 100 bonus points for any user spending greater than $2000 in that quarter'
     }
   ].freeze # TODO: Move to db. keeping this hardcoded for now. Ideally clients should be able to create reward programs & configure rules by themselves.
 
