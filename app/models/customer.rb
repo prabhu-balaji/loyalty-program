@@ -20,11 +20,6 @@ class Customer < ApplicationRecord
     )
   end
 
-  def grant_points(points:, transaction_id: nil, reward_program_id: nil)
-    PointsGranter.call(points: points, transaction_id: transaction_id, reward_program_id: reward_program_id,
-                       customer_id: self.id)
-  end
-
   private
 
   def set_tier_id
