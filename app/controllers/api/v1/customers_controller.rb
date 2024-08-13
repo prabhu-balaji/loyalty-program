@@ -5,7 +5,7 @@ module Api
 
       rescue_from ActiveRecord::RecordNotUnique do
         handle_uniqueness_error(model_name: 'Customer', field_name: 'external_id')
-      end
+      end # Random comment
       def create
         customer = Customer.new(customer_params)
         status = customer.save
