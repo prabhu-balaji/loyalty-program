@@ -8,7 +8,7 @@ module Api
       end # Random comment
       def create # Random comment 2
         customer = Customer.new(customer_params)
-        status = customer.save
+        status = customer.save # random comment 3
         raise ApplicationBaseException.new(message: customer.errors.full_messages.first) unless status
 
         render json: customer, serializer: CustomerCreationSerializer, status: :created
